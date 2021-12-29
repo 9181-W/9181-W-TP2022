@@ -1,0 +1,6 @@
+*.o
+.vscode/
+remove()
+bin/
+.d/
+firmware/
