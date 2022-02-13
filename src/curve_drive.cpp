@@ -35,7 +35,14 @@ double get_adj_heading(bool reverse)
 
   if(reverse == true)
   {
-    angle = angle - 180;
+    // if(angle > 360)
+    // {
+      angle = angle - 180;
+    // }
+    // else
+    // {
+    //   angle = angle + 180;
+    // }
   }
 
   return angle;

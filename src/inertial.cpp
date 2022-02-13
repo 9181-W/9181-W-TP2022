@@ -96,3 +96,24 @@ double inertial_get_value()
   //returns an average of the two inertial values
   return ((curr_1 + curr_2) / 2);
 }
+
+// Reset inertial value to a value between -180 and +180.
+void normalize_inertial()
+{
+  double current = inertial_get_value();
+  int current_int = current * 10.0;
+  int modulus = current_int % 3600;
+  double inertial_offset = 0.0;
+
+  if (current < 0)
+  {
+    inertial_offset = current + modulus / 10.0;
+  }
+  else if (current > 0)
+  {
+    inertial_offset = current - modulus / 10.0;
+  }
+
+  zero_inertial_1 = zero_inertial_1 + inertial_offset;
+  zero_inertial_2 = zero_inertial_2 + inertial_offset;
+}

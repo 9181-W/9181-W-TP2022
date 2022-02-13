@@ -1,6 +1,6 @@
-#define VISION_PORT 1
+#define VISION_PORT 21
 
-#define RED_GOAL_SIG 1
+// #define RED_GOAL_SIG 1
 // #define BLUE_GOAL_SIG 3
 // #define YELLOW_GOAL_SIG 2
 

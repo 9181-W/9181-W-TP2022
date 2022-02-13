@@ -62,7 +62,7 @@ void modified_initialize()
 
   tracker_initialize();
 
-  vision_initialize();
+  // vision_initialize();
 
   arm_mtr.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 

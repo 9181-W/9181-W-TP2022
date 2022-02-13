@@ -100,7 +100,7 @@ void lower_lifter()
 void raise_lifter()
 {
   back_claw.set_value(true);
-  pros::delay(100);
+  pros::delay(125);
   tilter.set_value(false);
 }
 
