@@ -50,7 +50,7 @@ void async_intake(void *param)
       intake(async_intake_speed);
       async_complete_4 = true;
     }
-    pros::delay(10);
+    pros::delay(33);
   }
 }
 
@@ -81,7 +81,7 @@ void lower_arm(double speed, bool wait_for_complete)
   if (wait_for_complete == true)
   {
     do {
-      pros::delay(50);
+      pros::delay(33);
 
       // printf("Is stopped: %f\n",lifter_smtr.getPosition());
     } while((wait_for_complete == true) && (arm_mtr.getPosition() >= 5));

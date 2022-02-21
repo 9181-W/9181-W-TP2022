@@ -4,6 +4,7 @@
 #define INTAKE_PORT 14
 #define ARM_PORT 17
 #define PNEUMATIC_CLAW_PORT 'A'
+#define PNEUMATIC_FLAP_PORT 'D'
 #define TILTER_PORT 'B'
 #define BACK_CLAW_PORT 'C'
 // #define OPTICAL_SHAFT_ENCODER_RIGHT_TOP 'A'
@@ -22,5 +23,6 @@ extern pros::Rotation* shaft_enc_m;
 extern okapi::Motor intake_mtr;
 extern okapi::Motor arm_mtr;
 extern pros::ADIDigitalOut pneumatic_claw;
+extern pros::ADIDigitalOut pneumatic_flap;
 extern pros::ADIDigitalOut back_claw;
 extern pros::ADIDigitalOut tilter;

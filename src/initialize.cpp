@@ -18,6 +18,7 @@ okapi::Motor intake_mtr(INTAKE_PORT, false, AbstractMotor::gearset::blue, Abstra
 okapi::Motor arm_mtr(ARM_PORT, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
 
 pros::ADIDigitalOut pneumatic_claw(PNEUMATIC_CLAW_PORT);
+pros::ADIDigitalOut pneumatic_flap(PNEUMATIC_FLAP_PORT);
 pros::ADIDigitalOut back_claw(BACK_CLAW_PORT);
 pros::ADIDigitalOut tilter(TILTER_PORT);
 

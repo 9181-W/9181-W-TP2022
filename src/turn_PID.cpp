@@ -89,7 +89,7 @@ void gyro_turn(QAngle angle, double max_speed, double min_speed, double kp, doub
         //Calculate distance left to turn
         turn_error = distance_in_degrees - current_pos_in_degrees;
 
-        printf("current: %f  error: %f ", current_pos_in_degrees, turn_error);
+        // printf("current: %f  error: %f ", current_pos_in_degrees, turn_error);
 
         //Calculates the derivative
         double turn_derivative = turn_last_error - turn_error;
@@ -114,7 +114,7 @@ void gyro_turn(QAngle angle, double max_speed, double min_speed, double kp, doub
 
         //Calculate speed to be turned at using kp,ki,kd
         double speed = turn_error * turn_kp + turn_derivative * turn_kd;
-        printf("stop: %f  Speed: %f  (p,i,d): (%f,%f) ",last_three_turn_derivatives,speed,turn_error*turn_kp,turn_derivative*turn_kd);
+        // printf("stop: %f  Speed: %f  (p,i,d): (%f,%f) ",last_three_turn_derivatives,speed,turn_error*turn_kp,turn_derivative*turn_kd);
 
         //Removes impossible speeds by setting the speed down to a possible one
         if(speed > max_speed)
@@ -136,7 +136,7 @@ void gyro_turn(QAngle angle, double max_speed, double min_speed, double kp, doub
           speed = -min_speed;
         }
 
-        printf("adj speed: %f\n",speed);
+        // printf("adj speed: %f\n",speed);
 
         //Setting the desired speed in a percent form and waiting 10 milliseconds
         drive_train.AutonomousArcadeDrive(0.0, -speed);

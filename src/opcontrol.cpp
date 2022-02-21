@@ -5,6 +5,7 @@
 bool L1_pressed = false; //pneumatic claw (toggle)
 bool A_pressed = false; //brake mode (toggle)
 bool L2_pressed = false; //pneumatic wings (toggle)
+bool X_pressed = false;
 
 void arcade_controls()
 {
@@ -54,6 +55,7 @@ void arm_controls(double arm_gearset_rpm = 100)
 
 
 bool wasAPressed = false;
+bool wasXPressed = false;
 bool wasL1Pressed = false;
 bool wasL2Pressed = false;
 void button_utilities(void* param)
@@ -97,6 +99,27 @@ void button_utilities(void* param)
     if (L1_pressed == false)
     {
       pneumatic_claw.set_value(false);
+    }
+  }
+
+  ////////////////////////////////////////////////A/////////////////////////////////////////////////
+  if ((master_controller.getDigital(okapi::ControllerDigital::X)) == true)
+  {
+      wasXPressed = true;
+  }
+
+  if (((master_controller.getDigital(okapi::ControllerDigital::X)) == false) && wasXPressed)
+  {
+    wasXPressed = false;
+    X_pressed = !X_pressed;
+
+    if (X_pressed == true)
+    {
+      pneumatic_flap.set_value(true);
+    }
+    if (X_pressed == false)
+    {
+      pneumatic_flap.set_value(false);
     }
   }
 

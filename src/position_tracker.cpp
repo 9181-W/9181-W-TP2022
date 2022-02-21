@@ -81,7 +81,7 @@ void position_tracker_task(void* param)
   const double sR = 1.4375;
   //The forward-backward distance from the tracking center to the back tracking wheel
   // const double sS = 3.0;
-  const double sS = 0.75; //2.8125
+  const double sS = 0.625; //2.8125
   //Creates a constant for wheel diameter
   const double wheel_diam = 2.75;
   //const double wheel_diam = 3.25;
@@ -117,7 +117,8 @@ void position_tracker_task(void* param)
     double delta_S = (middle_shaft_val - previous_middle_shaft_val);
     double delta_heading = (inertial_value - previous_inertial_value);
 
-    pros::lcd::print(4,"r %5.1f m %5.1f", right_shaft_val, middle_shaft_val);
+    pros::lcd::print(0,"r %5.1f m %5.1f", right_shaft_val, middle_shaft_val);
+    // printf("r %5.1f m %5.1f\n", right_shaft_val, middle_shaft_val);
 
     //3. Update stored "previous values" of encoders
     // previous_left_shaft_val = left_shaft_val;
@@ -158,11 +159,15 @@ void position_tracker_task(void* param)
     //9. Calculate the average orientation 𝜃𝑚 = 𝜃0 + Δ𝜃 / 2
     QAngle theta_m = theta_0 + delta_theta / 2;
 
+    // printf("delta_d_x %6.4f delta_d_y %6.4f theta_m %6.4f\n",delta_d_x, delta_d_y, theta_m.convert(degree));
+
     // 10. Calculate global offset Δ𝑑⃗  as Δ𝑑⃗⃗ rotated by −𝜃𝑚; this can be done by converting your existing
     // Cartesian coordinates to polar coordinates, changing the angle, then converting back
     // 11. Calculate new absolute position 𝑑1⃗⃗⃗ = 𝑑0 ⃗⃗ + Δ𝑑⃗
     double cos_theta_m = okapi::cos(-theta_m).getValue();
 	  double sin_theta_m = okapi::sin(-theta_m).getValue();
+
+    // printf("cos_theta_m %6.4f sin_theta_m %6.4f\n",cos_theta_m, sin_theta_m);
 
   	// Update the global position
   	x_position += delta_d_x * cos_theta_m;
@@ -174,7 +179,8 @@ void position_tracker_task(void* param)
   	heading += delta_theta;
     theta_0 += delta_theta;
 
-    pros::lcd::print(6,"X %5.1f Y %5.1f H %5.1f",x_position, y_position, heading.convert(degree));
+    pros::lcd::print(7,"X %5.1f Y %5.1f H %5.1f",x_position, y_position, heading.convert(degree));
+    // printf("X %5.1f Y %5.1f H %5.1f\n",x_position, y_position, heading.convert(degree));
 
     pros::delay(10);
   }

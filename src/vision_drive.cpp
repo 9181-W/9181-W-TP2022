@@ -42,7 +42,7 @@ void vision_drive(int colour, double max_speed, double min_speed, double distanc
     //Sets the proportional constant for driving straight
     // const double drive_straight_kp = 0.0025;
     // const double drive_straight_kp = 0.003;
-    
+
     double distance_from_bottom = 212 - current_bottom;
     //Draws starting position from the encoders (found in chassisController.cpp on github)
     double start_pos_val = shaft_enc_r->get_position() / 100.0;
@@ -206,7 +206,7 @@ void vision_drive(int colour, double max_speed, double min_speed, double distanc
 
         // printf("requested_velocity= %7.3f\n", speed);
         printf("curr: %f  error: %f, spd: %f\n",current_center,drive_straight_error,turn_speed);
-        pros::lcd::print(3,"turn_speed %f  speed %f", turn_speed, speed);
+        // pros::lcd::print(3,"turn_speed %f  speed %f", turn_speed, speed);
 
         //Setting the desired speed in a percent form and waiting 10 milliseconds
         drive_train.AutonomousArcadeDrive(speed, turn_speed);
@@ -232,7 +232,7 @@ void vision_drive(int colour, double max_speed, double min_speed, double distanc
 
       current_pos_val = (shaft_enc_r->get_position() / 100.0) - start_pos_val;
       distance_travelled = current_pos_val / degrees_per_inch;
-      pros::delay(10);
+      pros::delay(33);
     }
     // stop
     drive_train.AutonomousArcadeDrive(0.0, 0.0);

@@ -70,7 +70,7 @@ void left_vel_pid(void* param)
       last_error = error;
     }
 
-    pros::delay(16);
+    pros::delay(10);
   }
 }
 
@@ -271,12 +271,28 @@ double DriveTrain::GetRightVoltage()
 
 void DriveTrain::MoveLeftVoltage(double speed)
 {
-  m_LeftMotorGroup.moveVoltage(speed * 12000);
+  //if the speed is below a certain value set it to a moveVelocity so as to respect the brake mode
+  if(fabs(speed) < 0.03)
+  {
+    m_LeftMotorGroup.moveVelocity(0.0);
+  }
+  else
+  {
+    m_LeftMotorGroup.moveVoltage(speed * 12000);
+  }
 }
 
 void DriveTrain::MoveRightVoltage(double speed)
 {
-  m_RightMotorGroup.moveVoltage(speed * 12000);
+  //if the speed is below a certain value set it to a moveVelocity so as to respect the brake mode
+  if(fabs(speed) < 0.03)
+  {
+    m_RightMotorGroup.moveVelocity(0.0);
+  }
+  else
+  {
+    m_RightMotorGroup.moveVoltage(speed * 12000);
+  }
 }
 
 void DriveTrain::MoveVelocity(double drive_speed)

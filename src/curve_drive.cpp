@@ -158,8 +158,10 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
   // double max_rotate_speed = 100;
   // double min_rotate_speed = 0;
 
+  int turn_time = 0;
+
   // while ((fabs(rotate_error) > rotate_epsilon))
-  while((fabs(rotate_error) > rotate_epsilon) && (turn_first == true))
+  while((fabs(rotate_error) > rotate_epsilon) && (turn_first == true) && (turn_time < 2000))
   {
       // ******************************************************************************************************************************* //
       //  This code uses proportional , differential, and integral constants to calculate the best speed to reach the desired distance   //
@@ -209,13 +211,14 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
       //Setting the desired speed in a percent form and waiting 10 milliseconds
       drive_train.AutonomousArcadeDrive(0.0, -rotate_speed);
 
-      pros::lcd::print(1,"curr_x= %5.1f, curr_y= %5.1f",current_x_position, current_y_position);
-      pros::lcd::print(2,"targ_x= %5.1f, targ_y= %5.1f",x_target_position, y_target_position);
-      pros::lcd::print(3,"error= %5.1f", drive_error);
-      pros::lcd::print(4,"angle= %5.1f", new_angle);
-      pros::lcd::print(5,"inertial_angle= %5.1f", inertial_get_value());
+      // pros::lcd::print(1,"curr_x= %5.1f, curr_y= %5.1f",current_x_position, current_y_position);
+      // pros::lcd::print(2,"targ_x= %5.1f, targ_y= %5.1f",x_target_position, y_target_position);
+      // pros::lcd::print(3,"error= %5.1f", drive_error);
+      // pros::lcd::print(4,"angle= %5.1f", new_angle);
+      // pros::lcd::print(5,"inertial_angle= %5.1f", inertial_get_value());
 
-      pros::delay(16);
+      pros::delay(33);
+      turn_time += 33;
   }
 
   // //Stops the robot from moving after the robot has reached its target distance
@@ -240,7 +243,7 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
 
   while(((fabs(drive_error) > 1.0) && (fabs(last_three_derivatives)) > epsilon) || (fabs(drive_error) > fabs(initial_distance_to_target) / division_const))
   {
-    pros::lcd::print(1,"actual_robot_velocity= %5.1f", drive_train.GetVelocity());
+    // pros::lcd::print(1,"actual_robot_velocity= %5.1f", drive_train.GetVelocity());
     // pros::lcd::print(3,"last three derivative = %5.1f", last_three_derivatives);
     // pros::lcd::print(4,"drive error           = %5.1f", drive_error);
 
@@ -366,10 +369,10 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
       turn_speed = 0;
     }
 
-    // printf("driver_error: %7.3f  heading: %7.3f  angle_to_target: %7.3f  curve_error: %7.3f  turn_speed: %7.3f\n",drive_error,inertial_get_value(),new_angle,curve_error,turn_speed);
-    pros::lcd::print(3,"curve_error= %5.3f", curve_error);
-    pros::lcd::print(4,"turn_speed= %5.3f", turn_speed);
-    pros::lcd::print(7,"angle_to_target= %5.3f", angle_to_target);
+    // printf("driver_error: %7.3f  heading: %7.3f  angle_to_target: %7.3f  curve_error: %7.3f  turn_speed: %7.3f\n",drive_error,inertial_get_value(),new_angle,curve_error,turn_speed)
+    // pros::lcd::print(3,"curve_error= %5.3f", curve_error);
+    // pros::lcd::print(4,"turn_speed= %5.3f", turn_speed);
+    // pros::lcd::print(7,"angle_to_target= %5.3f", angle_to_target);
     // printf("adj_turn_speed: %f\n",turn_speed);
 
 
@@ -392,6 +395,7 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
     // Emergency EXIT
     if (drive_error > smallest_error * 1.2)
     {
+      printf("EMERGENCY_EXIT");
       break;
     }
 
@@ -431,10 +435,16 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
     drive_train.AutonomousArcadeDrive(speed, -turn_speed);
     // drive_train.ArcadeDrive(speed, -turn_speed);
     // chassis_model->driveVector(speed, (turn_speed / 4));
-    pros::delay(16);
+    pros::delay(33);
+    // while(((fabs(drive_error) > 1.0) && (fabs(last_three_derivatives)) > epsilon) || (fabs(drive_error) > fabs(initial_distance_to_target) / division_const))
+    // printf("drive_error: %7.3f > 1.0\n", fabs(drive_error));
+    // printf("e1 %7.4f, e2 %7.4f, e3 %7.4f, e4 %7.4f\n", last_error, second_last_error, third_last_error, fourth_last_error);
+    // printf("d1 %7.4f, d2 %7.4f, d3 %7.4f, l3d %7.4f\n", last_derivative, second_last_derivative, third_last_derivative, last_three_derivatives);
+    // printf("fabs(l3d): %7.3f > %7.3f\n", fabs(last_three_derivatives), epsilon);
+    // printf("div const: %7.3f > %7.3f\n", fabs(drive_error), (fabs(initial_distance_to_target) / division_const));
   }
 
-  pros::lcd::print(7,"EXITED: %7.3f - %7.3f",drive_error,smallest_error);
+  // pros::lcd::print(7,"EXITED: %7.3f - %7.3f",drive_error,smallest_error);
   printf("exited\n");
 
   //Stops the robot from moving after the robot has reached its target distance

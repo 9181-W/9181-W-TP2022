@@ -58,7 +58,7 @@ void inertial_initialize()
   // inertial_2->reset();
 
   //prints calibrating to the lcd
-  pros::lcd::print(7,"CALIBRATING");
+  // pros::lcd::print(7,"CALIBRATING");
   pros::delay(10);
 
   //waits while the inertial sensors are calibrating
@@ -72,7 +72,7 @@ void inertial_initialize()
   pros::Task inertial_value_task (inertial_reading, (void*)"PROSV5", TASK_PRIORITY_MAX,
     TASK_STACK_DEPTH_DEFAULT, "Inertial Value Task");
 
-    pros::lcd::print(7,"CALIBRATed");
+    // pros::lcd::print(7,"CALIBRATed");
 }
 
 //sets the initial zero location of the inertial sensors to zero

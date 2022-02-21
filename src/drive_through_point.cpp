@@ -288,7 +288,7 @@ void drive_through_point(QLength x_target, QLength y_target, double max_speed, d
     // Set final speed and calculate the new error //
     // ******************************************* //
 
-    pros::lcd::print(2,"requested_velocity= %5.1f", speed);
+    // pros::lcd::print(2,"requested_velocity= %5.1f", speed);
 
     //Setting the desired speed in a percent form and waiting 10 milliseconds
     // std::shared_ptr<ChassisModel> chassis_model = chassis->getModel();
@@ -298,7 +298,7 @@ void drive_through_point(QLength x_target, QLength y_target, double max_speed, d
     pros::delay(33);
   }
 
-  pros::lcd::print(7,"EXITED");
+  // pros::lcd::print(7,"EXITED");
   printf("exited\n");
 
   //Stops the robot from moving after the robot has reached its target distance
