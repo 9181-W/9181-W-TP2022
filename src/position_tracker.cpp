@@ -98,7 +98,7 @@ void position_tracker_task(void* param)
   double previous_left_shaft_val = 0.0;
   double previous_right_shaft_val = 0.0;
   double previous_middle_shaft_val = 0.0;
-  double previous_inertial_value = 0.0;
+  double previous_inertial_value = inertial_get_value();
 
   //Creates a variable to keep track of the last calculated angle
   QAngle theta_0 = 0_deg;
@@ -108,7 +108,7 @@ void position_tracker_task(void* param)
     // 1. Store the current encoder values in local variables
     // double left_shaft_val = (shaft_enc_l->get() / degrees_per_inch);
     double right_shaft_val = ((shaft_enc_r->get_position() / 100.0) / degrees_per_inch);
-    double middle_shaft_val = ((shaft_enc_m->get_position() / 100.0) / degrees_per_inch);
+    double middle_shaft_val = -((shaft_enc_m->get_position() / 100.0) / degrees_per_inch);
     double inertial_value = inertial_get_value();
 
     //2. Calculate the change in each encoders’ value since the last cycle
@@ -155,7 +155,6 @@ void position_tracker_task(void* param)
     }
 
     //pros::lcd::print(4,"dt %5.1f ddx %5.1f ddy %5.1f",delta_theta.convert(degree), delta_d_x, delta_d_y);
-
     //9. Calculate the average orientation 𝜃𝑚 = 𝜃0 + Δ𝜃 / 2
     QAngle theta_m = theta_0 + delta_theta / 2;
 
@@ -164,17 +163,24 @@ void position_tracker_task(void* param)
     // 10. Calculate global offset Δ𝑑⃗  as Δ𝑑⃗⃗ rotated by −𝜃𝑚; this can be done by converting your existing
     // Cartesian coordinates to polar coordinates, changing the angle, then converting back
     // 11. Calculate new absolute position 𝑑1⃗⃗⃗ = 𝑑0 ⃗⃗ + Δ𝑑⃗
-    double cos_theta_m = okapi::cos(-theta_m).getValue();
-	  double sin_theta_m = okapi::sin(-theta_m).getValue();
+    double polarR = std::sqrt((delta_d_x * delta_d_x) + (delta_d_y * delta_d_y));
+    double polarA = std::atan2(delta_d_y, delta_d_x) - theta_m.convert(radian);
 
-    // printf("cos_theta_m %6.4f sin_theta_m %6.4f\n",cos_theta_m, sin_theta_m);
+    double dX = std::cos(polarA) * polarR;
+    double dY = std::sin(polarA) * polarR;
 
-  	// Update the global position
-  	x_position += delta_d_x * cos_theta_m;
-  	y_position += delta_d_x * sin_theta_m;
+    if (isnan(dX))
+    {
+      dX = 0;
+    }
 
-  	x_position += delta_d_y * -sin_theta_m; // -sin(x) = sin(-x)
-  	y_position += delta_d_y * cos_theta_m; // cos(x) = cos(-x)
+    if (isnan(dY))
+    {
+      dY = 0;
+    }
+
+  	x_position += dX;
+  	y_position += dY;
 
   	heading += delta_theta;
     theta_0 += delta_theta;

@@ -321,11 +321,13 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
     if(velocity_adj > maximum_vel_adj)
     {
         speed = last_speed + maximum_vel_adj;
+        // speed = speed;
     }
 
      if(velocity_adj < -maximum_vel_adj)
     {
         speed = last_speed + -maximum_vel_adj;
+        // speed = speed;
     }
 
     last_speed = speed;
@@ -444,7 +446,8 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
     // printf("div const: %7.3f > %7.3f\n", fabs(drive_error), (fabs(initial_distance_to_target) / division_const));
   }
 
-  // pros::lcd::print(7,"EXITED: %7.3f - %7.3f",drive_error,smallest_error);
+  pros::lcd::print(5,"EXIT: %5.1f - %5.1f - %5.1f",drive_error,smallest_error,last_three_derivatives);
+  pros::lcd::print(6,"X: %5.1f  Y: %5.1f",current_x_position,current_y_position);
   printf("exited\n");
 
   //Stops the robot from moving after the robot has reached its target distance

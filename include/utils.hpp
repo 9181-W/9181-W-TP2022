@@ -15,6 +15,8 @@ extern void raise_lifter();
 // extern void async_claw_actuate();
 extern void open_claw();
 extern void close_claw();
+extern void raise_flap();
+extern void lower_flap();
 extern void kill_all_tasks();
 // extern void async_claw_shut_off();
 // extern void async_lower_lifter();

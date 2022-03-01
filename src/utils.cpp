@@ -104,6 +104,16 @@ void raise_lifter()
   tilter.set_value(false);
 }
 
+void lower_flap()
+{
+  pneumatic_flap.set_value(true);
+}
+
+void raise_flap()
+{
+  pneumatic_flap.set_value(false);
+}
+
 /*
 pros::Task* lifter_task = NULL;
 double async_complete_7;

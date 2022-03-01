@@ -17,25 +17,28 @@ const double degrees_per_circ = 360.0;
 const double degrees_per_inch = degrees_per_circ / wheel_circ;
 
 //Drive X distance at Y speed
-void gyro_drive(QLength distance, double max_speed, bool drive_straight)
+void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_speed, bool drive_straight, double drive_straight_kp, double epsilon)
 {
 
     //Chassis arcade takes values from -1 to 1 so this line allows a value from -100 to 100
     max_speed = max_speed / 100;
+    min_speed = min_speed / 100;
 
     //Setting the Proportional,Integral,Differential constants (P.I.D.)
-    const double drive_kp = 0.0005;
+    // const double drive_kp = 0.0005;
     const double drive_ki = 0.0000;
     const double drive_kd = -0.0001;
     //Creates a constant for allowable error before stopping
-    const double epsilon = 0.5;
+    // const double epsilon = 0.5;
+    const double zero_speed = 0.05;
     //Creates a maximum speed for velocity adjustment so that the robot will accelerate smoothly
     //and have no jerk at the beggining
     const double maximum_vel_adj = 0.1;
     //States the window in which the integral will be activated
     const double integral_limit = 250.0;
     //Sets the proportional constant for driving straight
-    const double drive_straight_kp = 0.01;
+    // const double drive_straight_kp = 0.03;
+    // const double drive_straight_kp = 0.01;
 
     //Converts Qlength distance to distance_in_inches
     double distance_in_inches = distance.convert(inch);
@@ -68,7 +71,8 @@ void gyro_drive(QLength distance, double max_speed, bool drive_straight)
     double last_three_derivatives = 9999.9;
 
     //Drive while the robot hasn't reached its target distance
-    while ((fabs(last_three_derivatives) > epsilon) || (fabs(drive_error) > fabs(distance_in_degrees) / 2.0))
+    // while ((fabs(last_three_derivatives) > epsilon) || (fabs(drive_error) > fabs(distance_in_degrees) / 2.0))
+    while(drive_error > 1.0)
     //while (fabs(last_three_derivatives) > epsilon)
     {
         // ******************************************************************************************************************************* //
@@ -145,6 +149,23 @@ void gyro_drive(QLength distance, double max_speed, bool drive_straight)
             speed = max_speed * -1;
         }
 
+        if(fabs(speed) < zero_speed)
+        {
+          speed = 0.0;
+        }
+        else if(fabs(speed) < min_speed)
+        {
+            if(speed > 0)
+            {
+                speed = min_speed;
+            }
+
+            else if(speed < 0)
+            {
+                speed = min_speed * -1;
+            }
+        }
+
 
         // ************************************************************************************************* //
         // Set maximum accelleration to prevent the robot from jerking right or left at the start of driving //
@@ -154,12 +175,14 @@ void gyro_drive(QLength distance, double max_speed, bool drive_straight)
 
         if(velocity_adj > maximum_vel_adj)
         {
-            speed = last_speed + maximum_vel_adj;
+            // speed = last_speed + maximum_vel_adj;
+            speed = speed;
         }
 
          if(velocity_adj < -maximum_vel_adj)
         {
-            speed = last_speed + -maximum_vel_adj;
+            // speed = last_speed + -maximum_vel_adj;
+            speed = speed;
         }
 
         last_speed = speed;
@@ -203,8 +226,13 @@ void gyro_drive(QLength distance, double max_speed, bool drive_straight)
     drive_train.AutonomousArcadeDrive(0.0, 0.0);
 }
 
-QLength async_distance;
-double async_max_pos_speed;
+QLength async_distance_1;
+double async_max_pos_speed_1;
+double async_drive_kp_1;
+double async_min_speed_1;
+bool async_drive_straight_1;
+double async_drive_straight_kp_1;
+double async_epsilon_1;
 bool async_complete = true;
 pros::Task* drive_task = NULL;
 
@@ -215,7 +243,7 @@ void drive_async(void* param)
     if(!async_complete)
     {
       //gyro_drive(async_chassis, async_distance, async_max_speed, async_kp, async_ki, async_kd);
-      gyro_drive(async_distance, async_max_pos_speed);
+      gyro_drive(async_distance_1, async_drive_kp_1, async_max_pos_speed_1, async_min_speed_1, async_drive_straight_1, async_drive_straight_kp_1, async_epsilon_1);
       async_complete = true;
     }
     pros::delay(33);
@@ -231,15 +259,20 @@ void wait_for_drive_complete()
 {
   while(!async_complete)
   {
-    pros::delay(10);
+    pros::delay(33);
   }
 }
 
 //void async_gyro_drive(std::shared_ptr<ChassisController> chassis, QLength distance, double max_speed, double kp, double ki, double kd)
-void async_gyro_drive(std::shared_ptr<ChassisController> chassis, QLength distance, double max_speed)
+void async_gyro_drive(QLength distance, double drive_kp, double max_speed, double min_speed, bool drive_straight, double drive_straight_kp, double epsilon)
 {
-  async_distance = distance;
-  async_max_pos_speed = max_speed;
+  async_distance_1 = distance;
+  async_drive_kp_1 = drive_kp;
+  async_max_pos_speed_1 = max_speed;
+  async_min_speed_1 = min_speed;
+  async_drive_straight_1 = drive_straight;
+  async_drive_straight_kp_1 = drive_straight_kp;
+  async_epsilon_1 = epsilon;
   // async_kp = kp;
   // async_ki = ki;
   // async_kd = kd;
