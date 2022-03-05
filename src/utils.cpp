@@ -3,7 +3,7 @@ using namespace okapi;
 #include "initialize.hpp"
 #include "utils.hpp"
 #include "inertial.hpp"
-// #include "async_curve_drive_to_point.hpp"
+#include "async_curve_drive.hpp"
 
 pros::Task* intake_task = NULL;
 double async_complete_4;
@@ -28,7 +28,7 @@ void intake(double async_intake_speed)
     if((intake_mtr.getActualVelocity() < 15) && ((pros::c::millis() - start_time) > 2000))
     {
       intake_mtr.moveVelocity(-600);
-      pros::delay(500);
+      pros::delay(750);
       intake_mtr.moveVelocity(async_intake_speed);
       start_time = pros::c::millis();
     }
@@ -256,7 +256,7 @@ void kill_all_tasks()
   //   lifter_task = NULL;
   //   lifter_mtr.moveVelocity(0);
   // }
-  // kill_drive_task();
+  kill_drive_task();
 }
 
 void deploy_claw(bool on)

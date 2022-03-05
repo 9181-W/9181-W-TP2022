@@ -2,7 +2,7 @@
 #include "drive_train.hpp"
 #include "initialize.hpp"
 
-bool autonomous_on = true;
+bool autonomous_on = false;
 double requested_left_vel = 0.0;
 double requested_right_vel = 0.0;
 
@@ -27,49 +27,53 @@ void left_vel_pid(void* param)
   //Temp Variable//
   double delta_time = 0.0;
 
-  while(autonomous_on)
+  while(true)
   {
-    if (fabs(requested_left_vel) < 0.05)
+    if (autonomous_on)
     {
-      drive_train.MoveLeftVoltage(0.0);
+      if (fabs(requested_left_vel) < 0.05)
+      {
+        pros::lcd::print(5,"Exit via speed");
+        drive_train.MoveLeftVoltage(0.0);
+      }
+      else
+      {
+        pros::lcd::print(4,"requested_left_vel %f", requested_left_vel);
+        current_voltage = drive_train.GetLeftVoltage();
+    		current_velocity = drive_train.GetLeftVelocity();
+    		error = requested_left_vel - current_velocity;
+
+    		if (error == 0.0)
+    		{
+    			last_error = 0.0;
+    		}
+
+    		// if (abs(error) < integral_active_zone && error != 0.0)
+    		// {
+    		// 	total_error += error;
+    		// }
+    		// else
+    		// {
+    		// 	total_error = 0.0;
+    		// }
+
+    		// final_adjustment = ((error * kp) + (total_error * ki) + ((error - last_error) * kd));
+        final_adjustment = ((error * kp) + ((error - last_error) * kd));
+    		current_voltage += final_adjustment;
+    		if (current_voltage > 1.0)
+    		{
+    			current_voltage = 1.0;
+    		}
+    		else if (current_voltage < -1.0)
+    		{
+    			current_voltage = -1.0;
+    		}
+
+    		drive_train.MoveLeftVoltage(current_voltage);
+
+        last_error = error;
+      }
     }
-    else
-    {
-      current_voltage = drive_train.GetLeftVoltage();
-  		current_velocity = drive_train.GetLeftVelocity();
-  		error = requested_left_vel - current_velocity;
-
-  		if (error == 0.0)
-  		{
-  			last_error = 0.0;
-  		}
-
-  		// if (abs(error) < integral_active_zone && error != 0.0)
-  		// {
-  		// 	total_error += error;
-  		// }
-  		// else
-  		// {
-  		// 	total_error = 0.0;
-  		// }
-
-  		// final_adjustment = ((error * kp) + (total_error * ki) + ((error - last_error) * kd));
-      final_adjustment = ((error * kp) + ((error - last_error) * kd));
-  		current_voltage += final_adjustment;
-  		if (current_voltage > 1.0)
-  		{
-  			current_voltage = 1.0;
-  		}
-  		else if (current_voltage < -1.0)
-  		{
-  			current_voltage = -1.0;
-  		}
-
-  		drive_train.MoveLeftVoltage(current_voltage);
-
-      last_error = error;
-    }
-
     pros::delay(10);
   }
 }
@@ -95,51 +99,53 @@ void right_vel_pid(void* param)
   //Temp Variable//
   double delta_time = 0.0;
 
-  while(autonomous_on)
+  while(true)
   {
-    if (fabs(requested_right_vel) < 0.05)
+    if (autonomous_on)
     {
-      drive_train.MoveRightVoltage(0.0);
+      if (fabs(requested_right_vel) < 0.05)
+      {
+        drive_train.MoveRightVoltage(0.0);
+      }
+      else
+      {
+        current_voltage = drive_train.GetRightVoltage();
+    		current_velocity = drive_train.GetRightVelocity();
+        //printf("request: %7.3f  current: %7.3f (%7.3f)\n",requested_right_vel,current_velocity,current_voltage);
+    		error = requested_right_vel - current_velocity;
+
+    		if (error == 0.0)
+    		{
+    			last_error = 0.0;
+    		}
+
+    		// if (abs(error) < integral_active_zone && error != 0.0)
+    		// {
+    		// 	total_error += error;
+    		// }
+    		// else
+    		// {
+    		// 	total_error = 0.0;
+    		// }
+
+    		// final_adjustment = ((error * kp) + (total_error * ki) + ((error - last_error) * kd));
+        final_adjustment = ((error * kp) + ((error - last_error) * kd));
+        //printf("adf: %7.3f  error: %7.3f  prop: %7.3f  diff: %7.3f)\n",final_adjustment,error,error * kp,((error - last_error) * kd));
+    		current_voltage += final_adjustment;
+    		if (current_voltage > 1.0)
+    		{
+    			current_voltage = 1.0;
+    		}
+    		else if (current_voltage < -1.0)
+    		{
+    			current_voltage = -1.0;
+    		}
+
+    		drive_train.MoveRightVoltage(current_voltage);
+
+        last_error = error;
+      }
     }
-    else
-    {
-      current_voltage = drive_train.GetRightVoltage();
-  		current_velocity = drive_train.GetRightVelocity();
-      //printf("request: %7.3f  current: %7.3f (%7.3f)\n",requested_right_vel,current_velocity,current_voltage);
-  		error = requested_right_vel - current_velocity;
-
-  		if (error == 0.0)
-  		{
-  			last_error = 0.0;
-  		}
-
-  		// if (abs(error) < integral_active_zone && error != 0.0)
-  		// {
-  		// 	total_error += error;
-  		// }
-  		// else
-  		// {
-  		// 	total_error = 0.0;
-  		// }
-
-  		// final_adjustment = ((error * kp) + (total_error * ki) + ((error - last_error) * kd));
-      final_adjustment = ((error * kp) + ((error - last_error) * kd));
-      //printf("adf: %7.3f  error: %7.3f  prop: %7.3f  diff: %7.3f)\n",final_adjustment,error,error * kp,((error - last_error) * kd));
-  		current_voltage += final_adjustment;
-  		if (current_voltage > 1.0)
-  		{
-  			current_voltage = 1.0;
-  		}
-  		else if (current_voltage < -1.0)
-  		{
-  			current_voltage = -1.0;
-  		}
-
-  		drive_train.MoveRightVoltage(current_voltage);
-
-      last_error = error;
-    }
-
     pros::delay(16);
   }
 }
@@ -202,6 +208,16 @@ void DriveTrain::ArcadeDrive(double drive_speed, double turn_speed)
 void DriveTrain::AutonomousArcadeDrive(double drive_speed, double turn_speed)
 {
   autonomous_on = true;
+  // if (m_left_vel_pid_task == NULL)
+  // {
+  //   m_left_vel_pid_task = new pros::Task(left_vel_pid, (void*)"PROSLVELPID", TASK_PRIORITY_DEFAULT,
+  //                                            TASK_STACK_DEPTH_DEFAULT, "Left Vel Pid Task");
+  // }
+  // if (m_right_vel_pid_task == NULL)
+  // {
+  //   m_right_vel_pid_task = new pros::Task(right_vel_pid, (void*)"PROSLVELPID", TASK_PRIORITY_DEFAULT,
+  //                                            TASK_STACK_DEPTH_DEFAULT, "Right Vel Pid Task");
+  // }
 
   // Parameter Validation
   drive_speed = std::clamp(drive_speed, -1.0, 1.0);
@@ -278,13 +294,14 @@ void DriveTrain::MoveLeftVoltage(double speed)
   }
   else
   {
+    printf("voltage %8.2f\n", (speed * 12000));
     m_LeftMotorGroup.moveVoltage(speed * 12000);
   }
 }
 
 void DriveTrain::MoveRightVoltage(double speed)
 {
-  //if the speed is below a certain value set it to a moveVelocity so as to respect the brake mode
+  // if the speed is below a certain value set it to a moveVelocity so as to respect the brake mode
   if(fabs(speed) < 0.03)
   {
     m_RightMotorGroup.moveVelocity(0.0);

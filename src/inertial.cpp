@@ -94,7 +94,7 @@ double inertial_get_value()
   double curr_1 = inertial_value_1 - zero_inertial_1;
   double curr_2 = inertial_value_2 - zero_inertial_2;
   //returns an average of the two inertial values
-  return ((curr_1 + curr_2) / 2);
+  return (((curr_1 + curr_2) / 2) / 1.00305556);
 }
 
 // Reset inertial value to a value between -180 and +180.

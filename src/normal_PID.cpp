@@ -82,9 +82,9 @@ void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_
         //printf("Speed: %f  (p,i,d): (%f,%f,%f) ",speed,drive_error*drive_kp,integral*drive_ki,derivative*drive_kd);
         // printf("req speed: %f\n",speed);
 
-        printf("actual_robot_velocity = %7.3f\n", drive_train.GetVelocity());
-        printf("last three derivative = %7.3f\n", last_three_derivatives);
-        printf("drive error           = %7.3f\n", drive_error);
+        // printf("actual_robot_velocity = %7.3f\n", drive_train.GetVelocity());
+        // printf("last three derivative = %7.3f\n", last_three_derivatives);
+        // printf("drive error           = %7.3f\n", drive_error);
 
         //Calculate distance left to drive
         // drive_error = distance_in_degrees - static_cast<double>((current_pos_values[0] + current_pos_values[1])) / 4.0;;
@@ -136,7 +136,7 @@ void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_
         double speed = drive_error * drive_kp + integral * drive_ki + derivative * drive_kd;
         //printf("Speed: %f  (p,i,d): (%f,%f,%f) ",speed,drive_error*drive_kp,integral*drive_ki,derivative*drive_kd);
 
-        printf("middle_speed= %7.3f\n", speed);
+        // printf("middle_speed= %7.3f\n", speed);
 
         //Removes impossible speeds by setting the speed down to a possible one
         if(speed > max_speed)
@@ -210,7 +210,7 @@ void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_
         // Set final speed and calculate the new error //
         // ******************************************* //
 
-        printf("requested_velocity= %7.3f\n", speed);
+        // printf("requested_velocity= %7.3f\n", speed);
 
         //Setting the desired speed in a percent form and waiting 10 milliseconds
         drive_train.AutonomousArcadeDrive(speed, -turn_speed);

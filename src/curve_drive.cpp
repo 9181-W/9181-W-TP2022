@@ -110,6 +110,7 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
 {
   double x_target_position = x_target.convert(inch);
   double y_target_position = y_target.convert(inch);
+  // pros::lcd::print(5,"ENTERED");
 
   double new_angle = 0.0;
 
@@ -397,7 +398,8 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
     // Emergency EXIT
     if (drive_error > smallest_error * 1.2)
     {
-      printf("EMERGENCY_EXIT");
+      // printf("EMERGENCY_EXIT");
+      // pros::lcd::print(4,"EMERGENCY EXIT");
       break;
     }
 
@@ -437,6 +439,8 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
     drive_train.AutonomousArcadeDrive(speed, -turn_speed);
     // drive_train.ArcadeDrive(speed, -turn_speed);
     // chassis_model->driveVector(speed, (turn_speed / 4));
+    // pros::lcd::print(4,"ENTERED");
+    pros::lcd::clear_line(5);
     pros::delay(33);
     // while(((fabs(drive_error) > 1.0) && (fabs(last_three_derivatives)) > epsilon) || (fabs(drive_error) > fabs(initial_distance_to_target) / division_const))
     // printf("drive_error: %7.3f > 1.0\n", fabs(drive_error));
@@ -446,8 +450,10 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
     // printf("div const: %7.3f > %7.3f\n", fabs(drive_error), (fabs(initial_distance_to_target) / division_const));
   }
 
-  pros::lcd::print(5,"EXIT: %5.1f - %5.1f - %5.1f",drive_error,smallest_error,last_three_derivatives);
-  pros::lcd::print(6,"X: %5.1f  Y: %5.1f",current_x_position,current_y_position);
+  // pros::lcd::print(6,"EXITED");
+
+  // pros::lcd::print(5,"EXIT: %5.1f - %5.1f - %5.1f",drive_error,smallest_error,last_three_derivatives);
+  // pros::lcd::print(6,"X: %5.1f  Y: %5.1f",current_x_position,current_y_position);
   printf("exited\n");
 
   //Stops the robot from moving after the robot has reached its target distance

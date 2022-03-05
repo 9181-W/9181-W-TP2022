@@ -4,6 +4,8 @@
 #include "position_tracker.hpp"
 #include "vision.hpp"
 #include "curve_drive.hpp"
+#include "drive_train.hpp"
+#include "initialize.hpp"
 
 using namespace okapi;
 
@@ -62,17 +64,17 @@ void wait_for_drive_complete_2()
   }
 }
 
-// void kill_drive_task()
-// {
-//   // pros::c::task_suspend(drive_task_2);
-//   if(drive_task_2 != NULL)
-//   {
-//     drive_task_2->remove();
-//     drive_task_2 = NULL;
-//     chassis->getModel()->stop();
-//     async_complete_2 = true;
-//   }
-// }
+void kill_drive_task()
+{
+  // pros::c::task_suspend(drive_task_2);
+  if(drive_task_2 != NULL)
+  {
+    drive_task_2->remove();
+    drive_task_2 = NULL;
+    drive_train.ArcadeDrive(0.0, 0.0);
+    async_complete_2 = true;
+  }
+}
 
 //uses a new function to assign values to the asynchronous variables
 void async_curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, double min_speed, double kp, double kd, double max_turn_speed, double turn_kp, double rotate_kp, double max_rotate_speed, double min_rotate_speed, bool turn_first, bool stop_drive, bool reverse, int colour, double rotate_epsilon, double epsilon, double division_const, double lookahead_distance)
