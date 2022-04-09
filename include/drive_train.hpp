@@ -12,7 +12,7 @@ class DriveTrain
                AbstractMotor::brakeMode braketype = AbstractMotor::brakeMode::coast);
 
     void ArcadeDrive(double drive_speed, double turn_speed);
-    void AutonomousArcadeDrive(double drive_speed, double turn_speed);
+    void AutonomousArcadeDrive(double drive_speed, double turn_speed, bool velocity_control = true);
     double GetVelocity();
     double GetLeftVelocity();
     double GetRightVelocity();

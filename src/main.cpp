@@ -58,19 +58,82 @@ void competition_initialize() {}
 void autonomous()
 {
 
-	////////////////////////////////////////////////////LEFT SIDE MOGO RUSH////////////////////////////////////////////////
+	////////////////////////////////////////////////////Juke Auto --slot 7/////////////////////////////////////////////////////
 
 	// open_claw();
 	// move_arm(-50, 100);
-	// //void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_speed, bool drive_straight, double drive_straight_kp, double epsilon);
-	// async_gyro_drive(43_in, 0.002, 90, 80, true, 0.08, 1.0);
+	// curve_drive_to_point(-29_in, 48_in, 100, 30, 0.03, 0.01, 100, 0.015, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
+	// close_claw();
+	// curve_drive_to_point(0_in, 10_in, 100, 30, 0.03, 0.01, 100, 0.012, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	////////////////////////////////////////////////////MIDDLE RUSH --slot 6///////////////////////////////////////////////////
+
+	// drive_train.SetBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+	// open_claw();
+	// move_arm(-50, 100);
+	// async_gyro_drive(51_in, 0.5, 75, 50, true, 0.07, 1.0);//0.04
+	// // pros::delay(700);
+	// // lower_flap();
+	// wait_for_drive_complete();
+	// close_claw();
+	// pros::delay(350);
+	// lower_lifter();
+	// async_curve_drive_to_point(21_in, 12_in, 100, 30, 0.03, 0.01, 100, 0.01, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);
 	// pros::delay(750);
+	// move_arm(100, 100);
+	// wait_for_drive_complete_2();
+	// raise_lifter();
+	// async_intake(600);
+	// curve_drive_to_point(15_in, 10_in, 100, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
+	// pros::delay(2000);
+	// lower_lifter();
+	// stop_intake();
+
+
+
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	////////////////////////////////////////////////////DOUBLE RUSH --slot 5////////////////////////////////////////////////////////
+
+	// drive_train.SetBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+	// open_claw();
+	// move_arm(-50, 100);
+	// //void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_speed, bool drive_straight, double drive_straight_kp, double epsilon);
+	// async_gyro_drive(36.75_in, 1.0, 100, 100, true, 0.04, 1.0);//0.04
+	// pros::delay(350);
 	// lower_flap();
 	// wait_for_drive_complete();
 	// close_claw();
+	// pros::delay(250);
+	// curve_drive_to_point(1_in, 18_in, 100, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);
+	// raise_flap();
+	// move_arm(60, 100);
+	// lower_lifter();
+	// curve_drive_to_point(-34_in, 48_in, 100, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, true, false, true, NONE, 5, 0.00001, 2, 28);
+	// raise_lifter();
+	// curve_drive_to_point(1_in, 12_in, 100, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	////////////////////////////////////////////////////LEFT SIDE MOGO RUSH --slot 3////////////////////////////////////////////////
+
 	// drive_train.SetBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+	// open_claw();
+	// move_arm(-50, 100);
+	// //void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_speed, bool drive_straight, double drive_straight_kp, double epsilon);
+	// // async_gyro_drive(43_in, 0.002, 90, 80, true, 0.08, 1.0);
+	// async_gyro_drive(39_in, 1.0, 100, 100, true, 0.06, 1.0);//0.04
+	// pros::delay(500);
+	// lower_flap();
+	// wait_for_drive_complete();
+	// close_claw();
 	// pros::delay(350);
-	// async_curve_drive_to_point(-8_in, 0_in, 100, 30, 0.02, 0.01, 100, 0.008, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);
+	// async_curve_drive_to_point(-8_in, 0_in, 100, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);
 	// pros::delay(750);
 	// // move_arm(580, 100);
 	// raise_flap();
@@ -79,22 +142,22 @@ void autonomous()
 	// lower_lifter();
 	// // move_arm(400, 100);
 	// // gyro_turn_to(-100_deg, 100, 10.0, 0.003, 0.0, 0.0, 2);
-	// curve_drive_to_point(5.5_in, 0_in, 40, 30, 0.03, 0.01, 0, 0.008, 0.008, 200, 0, true, false, true, NONE, 1, 0.00001, 2, 28);
+	// curve_drive_to_point(5.5_in, -1_in, 40, 30, 0.03, 0.01, 50, 0.008, 0.008, 200, 0, true, false, true, NONE, 1, 0.00001, 2, 28);
 	// raise_lifter();
 	// move_arm(400, 100);
 	// async_intake(600);
 	// curve_drive_to_point(0_in, 24_in, 100, 30, 0.03, 0.01, 100, 0.002, 0.01, 200, 0, true, false, false, NONE, 5, 0.00001, 2, 28);
-	// curve_drive_to_point(60_in, 41_in, 30, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, true, false, false, NONE, 2, 0.00001, 2, 28);
+	// curve_drive_to_point(45_in, 41_in, 30, 30, 0.03, 0.01, 100, 0.008, 0.01, 200, 0, true, false, false, NONE, 2, 0.00001, 2, 28);
 	// lower_lifter();
 	// move_arm(0, 100);
-	// curve_drive_to_point(66_in, 42_in, 100, 30, 0.03, 0.01, 100, 0.002, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
+	// curve_drive_to_point(51_in, 42_in, 100, 30, 0.03, 0.01, 100, 0.002, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
 	// stop_intake();
 
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	////////////////////////////////////////////////////Match Auto - Carry/////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////Match Auto - Carry --slot 8/////////////////////////////////////////////////////////
 
 	// lower_flap();
 	// pros::delay(300);
@@ -150,36 +213,39 @@ void autonomous()
 
 
 
-	////////////////////////////////////////////////////Match Auto Race For Yellow////////////////////////////////////////////////
+	////////////////////////////////////////////////////Match Auto Race For Yellow --slot 2////////////////////////////////////////////////
 
-	drive_train.SetBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-	open_claw();
-	move_arm(-50, 100);
-	//void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_speed, bool drive_straight, double drive_straight_kp, double epsilon);
-	async_gyro_drive(39_in, 5, 200, 200, true, 0.1, 1.0);
-	pros::delay(400);
-	lower_flap();
-	wait_for_drive_complete();
-	// curve_drive_to_point(0_in, 40_in, 100, 100, 0.03, -0.05, 100, 0.04, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
-	close_claw();
-	// curve_drive_to_point(1_in, 18_in, 100, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);
-	// raise_flap();
-	// move_arm(640, 100);
-	// lower_lifter();
-	// curve_drive_to_point(18_in, 15_in, 50, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);
-	// raise_lifter();
-	// curve_drive_to_point(14_in, 15_in, 100, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
-	// async_intake(600);
-	// drive_through_point(12_in, 52_in, 30, 10, 0.02, 0.00, 100, 0.007, false, 5, 0.5, 2);
-	// curve_drive_to_point(23_in, 52_in, 30, 10, 0.03, 0.01, 100, 0.008, 0.007, 200, 0, true, false, false, NONE, 5, 0.00001, 2, 28);
-	// async_curve_drive_to_point(-4_in, 16_in, 100, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, true, false, true, NONE, 5, 0.00001, 2, 28);
-	// pros::delay(1250);
-	// move_arm(0, 100);
-	// stop_intake();
-	// wait_for_drive_complete_2();
-	// lower_lifter();
-	// curve_drive_to_point(0_in, 20_in, 30, 10, 0.03, 0.01, 100, 0.008, 0.007, 200, 0, true, false, false, NONE, 5, 0.00001, 2, 28);
-	// pros::lcd::print(2,"EXIT");
+// drive_train.SetBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+// 	open_claw();
+// 	move_arm(-50, 100);
+// 	//void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_speed, bool drive_straight, double drive_straight_kp, double epsilon);
+// 	async_gyro_drive(36.75_in, 1.0, 100, 100, true, 0.04, 1.0);//0.04
+// 	pros::delay(275);
+// 	lower_flap();
+// 	wait_for_drive_complete();
+// 	// curve_drive_to_point(0_in, 40_in, 100, 100, 0.03, -0.05, 100, 0.04, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
+// 	close_claw();
+// 	pros::delay(250);
+//
+// 	curve_drive_to_point(1_in, 19_in, 100, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);
+// 	raise_flap();
+// 	move_arm(640, 100);
+// 	lower_lifter();
+// 	curve_drive_to_point(18_in, 19_in, 100, 30, 0.03, 0.01, 100, 0.009, 0.01, 200, 0, true, false, true, NONE, 5, 0.001, 2, 28);//cutout changed
+// 	raise_lifter();
+// 	curve_drive_to_point(14_in, 19_in, 100, 30, 0.03, 0.01, 100, 0.008, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
+// 	async_intake(600);
+// 	// drive_through_point(12_in, 52_in, 30, 10, 0.02, 0.00, 100, 0.007, false, 5, 0.5, 2);
+// 	curve_drive_to_point(11_in, 53_in, 30, 10, 0.03, 0.01, 100, 0.008, 0.007, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
+// 	curve_drive_to_point(23_in, 55_in, 30, 10, 0.03, 0.01, 100, 0.008, 0.007, 200, 0, true, false, false, NONE, 5, 0.001, 2, 28);//cutout changed
+// 	async_curve_drive_to_point(-4_in, 16_in, 100, 30, 0.03, 0.01, 100, 0.008, 0.01, 200, 0, true, false, true, NONE, 5, 0.00001, 2, 28);
+// 	pros::delay(1250);
+// 	move_arm(0, 100);
+// 	stop_intake();
+// 	wait_for_drive_complete_2();
+// 	lower_lifter();
+// 	curve_drive_to_point(5_in, 22_in, 30, 10, 0.03, 0.01, 100, 0.008, 0.01, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
+// 	pros::lcd::print(2,"EXIT");
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -256,11 +322,17 @@ void autonomous()
 	// // gyro_turn_to(90_deg, 100, 10.0, 0.002, 0.0, 0.0, 2);
 	// open_claw();
 	// pros::delay(500);
+	// move_arm(520, 100);
 	// // gyro_turn_to(225_deg, 100, 10.0, 0.002, 0.0, 0.0, 2);
 	// curve_drive_to_point(92_in, -41_in, 100, 30, 0.022, -0.00416, 50, 0.005, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);
+	// //Driving Between
 	// // async_drive_through_point(54_in, -62_in, 100, 25, 0.03, 0.00, 100, 0.015, false, 5, 0.5, 2);
-	// // async_curve_drive_to_point(54_in, -61_in, 100, 30, 0.03, -0.00416, 100, 0.015, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28)//red side start;
-	// async_curve_drive_to_point(54_in, -62_in, 100, 30, 0.03, -0.00416, 100, 0.015, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);//blue side start
+	// // async_curve_drive_to_point(54_in, -61_in, 100, 30, 0.03, -0.00416, 100, 0.015, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28)//red side start old
+	// // async_curve_drive_to_point(54_in, -62_in, 100, 30, 0.03, -0.00416, 100, 0.015, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);//red side start
+	// // async_curve_drive_to_point(54_in, -62.5_in, 100, 30, 0.03, -0.00416, 100, 0.015, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);//initial working
+	// async_curve_drive_to_point(54_in, -64_in, 100, 30, 0.03, -0.00416, 100, 0.015, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);//initial working
+	//
+	// // async_curve_drive_to_point(54_in, -62.5_in, 100, 30, 0.03, -0.00416, 100, 0.01, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);//upstairs start
 	//
 	// lower_lifter();
 	// pros::delay(750);
@@ -271,7 +343,7 @@ void autonomous()
 	// wait_for_drive_complete_2();
 	// // normalize_inertial();
 	// // gyro_turn_to(360_deg, 100, 12.0, 0.003, 0.0, 0.0, 2);
-	// async_curve_drive_to_point(25_in, -95_in, 100, 30, 0.03, -0.00416, 100, 0.012, 0.008, 200, 0, true, false, true, NONE, 5, 0.00001, 2, 28);
+	// async_curve_drive_to_point(24_in, -95_in, 100, 30, 0.03, -0.00416, 100, 0.012, 0.008, 200, 0, true, false, true, NONE, 5, 0.00001, 2, 28);
 	// async_intake(-600);
 	// wait_for_drive_complete_2();
 	// stop_intake();
@@ -292,7 +364,7 @@ void autonomous()
 	// move_arm(580, 100);
 	// async_intake(600);
 	// drive_through_point(75_in, -66_in, 100, 25, 0.03, 0.00, 100, 0.015, false, 5, 0.5, 2);
-	// async_curve_drive_to_point(101_in, -52_in, 100, 30, 0.022, -0.00416, 200, 0.009, 0.008, 200, 0, true, false, false, NONE, 5, 0.00001, 2, 28);
+	// async_curve_drive_to_point(101_in, -55_in, 100, 30, 0.022, -0.00416, 200, 0.009, 0.008, 200, 0, true, false, false, NONE, 5, 0.00001, 2, 28);//changed by -1 on y
 	// wait_for_drive_complete_2();
 	// move_arm(520, 100);
 	// // gyro_turn_to(430_deg, 100, 12.0, 0.003, 0.0, 0.0, 2);
@@ -315,7 +387,7 @@ void autonomous()
 	// close_claw();
 	// move_arm(570, 100);
 	// curve_drive_to_point(84_in, -41_in, 100, 30, 0.022, -0.00416, 200, 0.01, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);
-	// async_curve_drive_to_point(100_in, -36_in, 100, 30, 0.024, -0.00416, 200, 0.008, 0.008, 200, 0, true, false, false, NONE, 5, 0.00001, 2, 28);
+	// async_curve_drive_to_point(100_in, -38_in, 100, 30, 0.024, -0.00416, 200, 0.008, 0.008, 200, 0, true, false, false, NONE, 5, 0.001, 2, 28);//cutout changed
 	// wait_for_drive_complete_2();
 	// // move_arm(510, 100);
 	// pros::delay(750);
@@ -346,7 +418,8 @@ void autonomous()
 	// async_curve_drive_to_point(110_in, -92_in, 90, 30, 0.02, -0.00416, 100, 0.005, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
 	// wait_for_drive_complete_2();
 	// //mogo under platfrom
-	// curve_drive_to_point(117.5_in, -77.5_in, 70, 30, 0.022, -0.00416, 200, 0.01, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);
+	// // curve_drive_to_point(117.5_in, -78_in, 70, 30, 0.022, -0.00416, 200, 0.01, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);//red side start
+	// curve_drive_to_point(117.5_in, -79.5_in, 70, 30, 0.022, -0.00416, 200, 0.01, 0.008, 200, 0, false, false, true, NONE, 5, 0.00001, 2, 28);//blue side start
 	// raise_lifter();
 	// move_arm(-50, 50);
 	// async_intake(600);
@@ -360,7 +433,7 @@ void autonomous()
 	// async_intake(600);
 	// async_curve_drive_to_point(110_in, 3_in, 100, 30, 0.022, -0.00416, 100, 0.013, 0.008, 200, 0, false, false, false, NONE, 5, 0.00001, 2, 28);
 	// wait_for_drive_complete_2();
-	// async_curve_drive_to_point(118_in, -9_in, 100, 30, 0.022, -0.00416, 100, 0.009, 0.008, 200, 0, false, false, false, NONE, 5, 0.001, 2, 28);
+	// async_curve_drive_to_point(117_in, -10_in, 100, 30, 0.022, -0.00416, 100, 0.009, 0.008, 200, 0, false, false, false, NONE, 5, 0.001, 2, 28);
 	// pros::delay(400);
 	// stop_intake();
 	// move_arm(415, 100);
@@ -373,7 +446,7 @@ void autonomous()
 	// move_arm(-50, 100);
 	// wait_for_drive_complete_2();
 	// normalize_inertial();
-	// async_curve_drive_to_point(100_in, 19.5_in, 100, 30, 0.022, -0.00416, 100, 0.009, 0.008, 200, 0, true, false, false, NONE, 5, 0.00001, 2, 28);
+	// async_curve_drive_to_point(100_in, 18.5_in, 100, 30, 0.022, -0.00416, 100, 0.009, 0.008, 200, 0, true, false, false, NONE, 5, 0.00001, 2, 28);
 	// pros::delay(750);
 	// stop_intake();
 	// wait_for_drive_complete_2();
@@ -381,11 +454,11 @@ void autonomous()
 	// async_intake(600);
 	//
   // //mogo stack code
-	// async_curve_drive_to_point(16_in, -34_in, 100, 30, 0.022, -0.00416, 100, 0.015, 0.008, 200, 0, false, false, false, NONE, 15, 0.00001, 2, 28);
+	// async_curve_drive_to_point(16_in, -34_in, 100, 30, 0.022, -0.00416, 100, 0.015, 0.008, 200, 0, false, false, false, NONE, 15, 0.001, 2, 28);//changed cutout
 	// move_arm(580, 100);
 	// wait_for_drive_complete_2();
 	// open_claw();
-	// async_curve_drive_to_point(26_in, -44_in, 100, 30, 0.022, -0.00416, 100, 0.01, 0.008, 200, 0, false, false, true, NONE, 15, 0.00001, 2, 28);
+	// async_curve_drive_to_point(20_in, -44_in, 100, 30, 0.022, -0.00416, 100, 0.01, 0.008, 200, 0, false, false, true, NONE, 15, 0.00001, 2, 28);
 	// wait_for_drive_complete_2();
 	// lower_lifter();
 	// async_curve_drive_to_point(30_in, -15_in, 100, 30, 0.022, -0.00416, 100, 0.01, 0.008, 200, 0, false, false, false, NONE, 15, 0.00001, 2, 28);

@@ -43,7 +43,7 @@ void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_
     //Converts Qlength distance to distance_in_inches
     double distance_in_inches = distance.convert(inch);
     //Convert distance to encoder degrees
-    double distance_in_degrees = distance_in_inches * degrees_per_inch;
+    const double distance_in_degrees = distance_in_inches * degrees_per_inch;
     //Draws starting position from the encoders (found in chassisController.cpp on github)
     double start_pos_val = shaft_enc_r->get_position() / 100.0;
     //Calculates current position based on start position (found in chassisController.cpp on github)
@@ -202,6 +202,8 @@ void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_
           //Calculates the amount that the robot is off of its heading
           double drive_straight_error = initial_drive_gyro_value - drive_gyro_value;
 
+          printf("gyro target %7.3f  gyro: %7.3f  ", initial_drive_gyro_value, drive_gyro_value);
+
           //Creates a turn speed so that different sides can be slowed down
           turn_speed = drive_straight_error * drive_straight_kp;
         }
@@ -210,10 +212,21 @@ void gyro_drive(QLength distance, double drive_kp, double max_speed, double min_
         // Set final speed and calculate the new error //
         // ******************************************* //
 
-        // printf("requested_velocity= %7.3f\n", speed);
+        printf("speed= %7.3f  turn_speed= %7.3f\n", speed, -turn_speed);
 
         //Setting the desired speed in a percent form and waiting 10 milliseconds
-        drive_train.AutonomousArcadeDrive(speed, -turn_speed);
+        // if(drive_error > (distance_in_degrees * 0.25))
+        // {
+          drive_train.AutonomousArcadeDrive(speed, -turn_speed, false);
+          // drive_train.AutonomousArcadeDrive(speed, 0.0, false);
+
+        // }
+        // else
+        // {
+        //   drive_train.AutonomousArcadeDrive(speed, -turn_speed);
+        //   // drive_train.AutonomousArcadeDrive(speed, 0.0);
+        //
+        // }
         pros::delay(33);
 
         //Calculates current position based on start position after small movement

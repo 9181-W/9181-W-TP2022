@@ -5,6 +5,7 @@
 bool L1_pressed = false; //pneumatic claw (toggle)
 bool A_pressed = false; //brake mode (toggle)
 bool L2_pressed = false; //pneumatic wings (toggle)
+bool Y_pressed = false;
 bool X_pressed = false;
 
 void arcade_controls()
@@ -33,6 +34,26 @@ void intake_controls()
   }
 }
 
+
+
+// void intake_controls()
+// {
+//   if ((master_controller.getDigital(okapi::ControllerDigital::R1)) == true)
+//   {
+//     lifetr_mtr.moveVelocity(600);
+//   }
+//
+//   else if ((master_controller.getDigital(okapi::ControllerDigital::R2)) == true)
+//   {
+//     intake_mtr.moveVelocity(-600);
+//   }
+//   else
+//   {
+//     intake_mtr.moveVelocity(0);
+//   }
+// }
+
+
 void arm_controls(double arm_gearset_rpm = 100)
 {
   const float DEAD_ZONE = 0.1;
@@ -58,6 +79,7 @@ bool wasAPressed = false;
 bool wasXPressed = false;
 bool wasL1Pressed = false;
 bool wasL2Pressed = false;
+bool wasYPressed = false;
 void button_utilities(void* param)
 {
   /////////////////////////////////////////////UP/////////////////////////////////////////////////////
@@ -147,6 +169,28 @@ void button_utilities(void* param)
       tilter.set_value(false);
     }
   }
+
+  ///////////////////////////////////////////Y////////////////////////////////////////////////
+  if ((master_controller.getDigital(okapi::ControllerDigital::Y)) == true)
+  {
+      wasYPressed = true;
+  }
+
+  if (((master_controller.getDigital(okapi::ControllerDigital::Y)) == false) && wasYPressed)
+  {
+    wasYPressed = false;
+    Y_pressed = !Y_pressed;
+
+    if(Y_pressed == true)
+    {
+      tilter.set_value(true);
+    }
+    if(Y_pressed == false)
+    {
+      tilter.set_value(false);
+    }
+  }
+  /////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 void button_utilities_task()

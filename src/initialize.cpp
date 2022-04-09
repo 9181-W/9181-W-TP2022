@@ -9,13 +9,14 @@
 pros::Rotation* shaft_enc_r = NULL;
 pros::Rotation* shaft_enc_m = NULL;
 
-DriveTrain drive_train({10, -18, -19}, {-11, 12, 13});
+DriveTrain drive_train({-18, -19, -20}, {11, 12, 13});
+// DriveTrain drive_train({10, -18, -19}, {-11, 12, 13});
 // DriveTrain drive_train({11, 12}, {-19, -20});
 //20 15
 
 okapi::Controller master_controller(ControllerId::master);
 okapi::Motor intake_mtr(INTAKE_PORT, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
-okapi::Motor arm_mtr(ARM_PORT, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
+okapi::Motor arm_mtr(ARM_PORT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
 
 pros::ADIDigitalOut pneumatic_claw(PNEUMATIC_CLAW_PORT);
 pros::ADIDigitalOut pneumatic_flap(PNEUMATIC_FLAP_PORT);
@@ -50,18 +51,18 @@ void modified_initialize()
   // shaft_enc_r = new ADIEncoder(OPTICAL_SHAFT_ENCODER_RIGHT_TOP, OPTICAL_SHAFT_ENCODER_RIGHT_BOTTOM, true);
   // shaft_enc_m = new ADIEncoder(OPTICAL_SHAFT_ENCODER_MIDDLE_TOP, OPTICAL_SHAFT_ENCODER_MIDDLE_BOTTOM, false);
 
-  shaft_enc_r = new pros::Rotation(VERTICAL_ROTATION_SENSOR);
-  shaft_enc_m = new pros::Rotation(HORIZONTAL_ROTATION_SENSOR);
-  shaft_enc_r->reset_position();
-  shaft_enc_m->reset_position();
+  // shaft_enc_r = new pros::Rotation(VERTICAL_ROTATION_SENSOR);
+  // shaft_enc_m = new pros::Rotation(HORIZONTAL_ROTATION_SENSOR);
+  // shaft_enc_r->reset_position();
+  // shaft_enc_m->reset_position();
 
-  //creates a task to display encoder values and make them continually drawable
-  pros::Task encoder_display (encoder_display_task, (void*)"PROSV5", TASK_PRIORITY_DEFAULT,
-    TASK_STACK_DEPTH_DEFAULT, "Encoder Display Task");
+  // //creates a task to display encoder values and make them continually drawable
+  // pros::Task encoder_display (encoder_display_task, (void*)"PROSV5", TASK_PRIORITY_DEFAULT,
+  //   TASK_STACK_DEPTH_DEFAULT, "Encoder Display Task");
 
-  inertial_initialize();
-
-  tracker_initialize();
+  // inertial_initialize();
+  //
+  // tracker_initialize();
 
   // vision_initialize();
 

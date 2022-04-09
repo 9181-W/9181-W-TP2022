@@ -205,9 +205,9 @@ void DriveTrain::ArcadeDrive(double drive_speed, double turn_speed)
   // m_RightMotorGroup.moveVoltage(right_speed);
 }
 
-void DriveTrain::AutonomousArcadeDrive(double drive_speed, double turn_speed)
+void DriveTrain::AutonomousArcadeDrive(double drive_speed, double turn_speed, bool velocity_control)
 {
-  autonomous_on = true;
+  autonomous_on = velocity_control;
   // if (m_left_vel_pid_task == NULL)
   // {
   //   m_left_vel_pid_task = new pros::Task(left_vel_pid, (void*)"PROSLVELPID", TASK_PRIORITY_DEFAULT,
@@ -229,13 +229,20 @@ void DriveTrain::AutonomousArcadeDrive(double drive_speed, double turn_speed)
   left_speed = std::clamp(left_speed, -1.0, 1.0);
   right_speed = std::clamp(right_speed, -1.0, 1.0);
 
+  printf("2 left_speed %8.3f  right_speed %8.3f\n", left_speed, right_speed);
   requested_left_vel = left_speed;
   requested_right_vel = right_speed;
 
-  // left_speed *= 12000;
-  // right_speed *= 12000;
-  // m_LeftMotorGroup.moveVoltage(left_speed);
-  // m_RightMotorGroup.moveVoltage(right_speed);
+  if (velocity_control == false)
+  {
+    m_LeftMotorGroup.moveVoltage(left_speed*12000);
+    m_RightMotorGroup.moveVoltage(right_speed*12000);
+    // m_LeftMotorGroup.moveVelocity(left_speed * 200);
+    // m_RightMotorGroup.moveVelocity(right_speed * 200);
+    // m_LeftMotorGroup.moveVelocity(200);
+    // m_RightMotorGroup.moveVelocity(200);
+
+  }
 }
 
 double DriveTrain::GetVelocity()
@@ -287,6 +294,7 @@ double DriveTrain::GetRightVoltage()
 
 void DriveTrain::MoveLeftVoltage(double speed)
 {
+  printf("move left voltage %8.2f\n", (speed * 12000));
   //if the speed is below a certain value set it to a moveVelocity so as to respect the brake mode
   if(fabs(speed) < 0.03)
   {
@@ -294,13 +302,13 @@ void DriveTrain::MoveLeftVoltage(double speed)
   }
   else
   {
-    printf("voltage %8.2f\n", (speed * 12000));
     m_LeftMotorGroup.moveVoltage(speed * 12000);
   }
 }
 
 void DriveTrain::MoveRightVoltage(double speed)
 {
+  printf("move right voltage %8.2f\n", (speed * 12000));
   // if the speed is below a certain value set it to a moveVelocity so as to respect the brake mode
   if(fabs(speed) < 0.03)
   {

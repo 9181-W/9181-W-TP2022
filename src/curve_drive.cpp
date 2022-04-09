@@ -210,7 +210,7 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
       }
 
       //Setting the desired speed in a percent form and waiting 10 milliseconds
-      drive_train.AutonomousArcadeDrive(0.0, -rotate_speed);
+      drive_train.AutonomousArcadeDrive(0.0, -rotate_speed, true);
 
       // pros::lcd::print(1,"curr_x= %5.1f, curr_y= %5.1f",current_x_position, current_y_position);
       // pros::lcd::print(2,"targ_x= %5.1f, targ_y= %5.1f",x_target_position, y_target_position);
@@ -436,7 +436,7 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
 
 
     //Setting the desired speed in a percent form and waiting 10 milliseconds
-    drive_train.AutonomousArcadeDrive(speed, -turn_speed);
+    drive_train.AutonomousArcadeDrive(speed, -turn_speed, true);
     // drive_train.ArcadeDrive(speed, -turn_speed);
     // chassis_model->driveVector(speed, (turn_speed / 4));
     // pros::lcd::print(4,"ENTERED");
@@ -457,5 +457,5 @@ void curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, 
   printf("exited\n");
 
   //Stops the robot from moving after the robot has reached its target distance
-  drive_train.AutonomousArcadeDrive(0.0, 0.0);
+  drive_train.AutonomousArcadeDrive(0.0, 0.0, true);
 }
