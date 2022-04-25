@@ -14,15 +14,13 @@ using namespace okapi;
 QLength async_x_target_2 = 0.0_in;
 QLength async_y_target_2 = 0.0_in;
 double async_max_speed_2 = 0.0;
-double async_min_speed_2 = 0.0;
-double async_kp_2 = 0.0;
-double async_kd_2 = 0.0;
 double async_max_turn_speed_2 = 0.0;
 double async_turn_kp_2 = 0.0;
 bool async_reverse_2 = false;
-double async_rotate_epsilon_2 = 0.0;
 double async_epsilon_2 = 0.0;
-double async_division_const_2 = 0.0;
+double async_lookahead_x = 0.0;
+double async_lookahead_y = 0.0;
+double async_lookahead_percentage = 0.0;
 bool async_complete_6 = true;
 pros::Task* drive_task_6 = NULL;
 
@@ -34,7 +32,7 @@ void async_drive_through_point(void* param)
     //if the drive is not complete continue running the drive
     if(!async_complete_6)
     {
-      drive_through_point(async_x_target_2, async_y_target_2, async_max_speed_2, async_min_speed_2, async_kp_2, async_kd_2, async_max_turn_speed_2, async_turn_kp_2, async_reverse_2, async_rotate_epsilon_2, async_epsilon_2, async_division_const_2);
+      drive_through_point(async_x_target_2, async_y_target_2, async_max_speed_2, async_max_turn_speed_2, async_turn_kp_2, async_reverse_2, async_epsilon_2, async_lookahead_x, async_lookahead_y, async_lookahead_percentage);
 
       //sets the drive to a completed state
       async_complete_6 = true;
@@ -64,6 +62,7 @@ void wait_for_drive_complete_6()
 //   if(drive_task_2 != NULL)
 //   {
 //     drive_task_2->remove();
+//     delete drive_task_2;
 //     drive_task_2 = NULL;
 //     chassis->getModel()->stop();
 //     async_complete_2 = true;
@@ -71,21 +70,19 @@ void wait_for_drive_complete_6()
 // }
 
 //uses a new function to assign values to the asynchronous variables
-void async_drive_through_point(QLength x_target_2, QLength y_target_2, double max_speed_2, double min_speed_2, double kp_2, double kd_2, double max_turn_speed_2, double turn_kp_2, bool reverse_2, double rotate_epsilon_2, double epsilon_2, double division_const_2)
+void async_drive_through_point(QLength x_target_2, QLength y_target_2, double max_speed_2, double max_turn_speed_2, double turn_kp_2, bool reverse_2, double epsilon_2, double lookahead_x_2, double lookahead_y_2, double async_lookahead_percentage_2)
 {
   //assigns values to the asynchronous variables
   async_x_target_2 = x_target_2;
   async_y_target_2 = y_target_2;
   async_max_speed_2 = max_speed_2;
-  async_min_speed_2 = min_speed_2;
-  async_kp_2 = kp_2;
-  async_kd_2 = kd_2;
   async_max_turn_speed_2 = max_turn_speed_2;
   async_turn_kp_2 = turn_kp_2;
   async_reverse_2 = reverse_2;
-  async_rotate_epsilon_2 = rotate_epsilon_2;
   async_epsilon_2 = epsilon_2;
-  async_division_const_2 = division_const_2;
+  async_lookahead_x = lookahead_x_2;
+  async_lookahead_y = lookahead_y_2;
+  async_lookahead_percentage = async_lookahead_percentage_2;
 
   //runs the drive to point as an asynchronous task
   if (drive_task_6 == NULL)

@@ -7,11 +7,12 @@ bool A_pressed = false; //brake mode (toggle)
 bool L2_pressed = false; //pneumatic wings (toggle)
 bool Y_pressed = false;
 bool X_pressed = false;
+bool Down_pressed = false;
 
 void arcade_controls()
 {
   double leftY = master_controller.getAnalog(okapi::ControllerAnalog::leftY);
-  double leftX = ((master_controller.getAnalog(okapi::ControllerAnalog::leftX) * -1) * 0.87);
+  double leftX = ((master_controller.getAnalog(okapi::ControllerAnalog::leftX) * -1) * 0.8);
 
   drive_train.ArcadeDrive(leftY, leftX);
 }
@@ -68,6 +69,10 @@ void arm_controls(double arm_gearset_rpm = 100)
 
     arm_mtr.moveVelocity(arm_speed);
   }
+  else if (master_controller.getDigital(okapi::ControllerDigital::B) == true)
+  {
+    arm_mtr.moveAbsolute(700, 100);
+  }
   else
   {
     arm_mtr.moveVelocity(0);
@@ -80,6 +85,7 @@ bool wasXPressed = false;
 bool wasL1Pressed = false;
 bool wasL2Pressed = false;
 bool wasYPressed = false;
+bool wasDownPressed = false;
 void button_utilities(void* param)
 {
   /////////////////////////////////////////////UP/////////////////////////////////////////////////////
@@ -124,10 +130,11 @@ void button_utilities(void* param)
     }
   }
 
-  ////////////////////////////////////////////////A/////////////////////////////////////////////////
+  ////////////////////////////////////////////////X/////////////////////////////////////////////////
   if ((master_controller.getDigital(okapi::ControllerDigital::X)) == true)
   {
       wasXPressed = true;
+      pros::lcd::print(2, "XPressed = %7.3f", wasXPressed);
   }
 
   if (((master_controller.getDigital(okapi::ControllerDigital::X)) == false) && wasXPressed)
@@ -137,6 +144,7 @@ void button_utilities(void* param)
 
     if (X_pressed == true)
     {
+      // pros::lcd::print(2, "wasXPressed = %7.3f", wasXPressed);
       pneumatic_flap.set_value(true);
     }
     if (X_pressed == false)
@@ -167,6 +175,27 @@ void button_utilities(void* param)
       back_claw.set_value(true);
       pros::delay(100);
       tilter.set_value(false);
+    }
+  }
+
+  ///////////////////////////////////////////DOWN////////////////////////////////////////////////
+  if ((master_controller.getDigital(okapi::ControllerDigital::down)) == true)
+  {
+      wasDownPressed = true;
+  }
+
+  if (((master_controller.getDigital(okapi::ControllerDigital::down)) == false) && wasDownPressed)
+  {
+    wasDownPressed = false;
+    Down_pressed = !Down_pressed;
+
+    if(Down_pressed == true)
+    {
+      stick.set_value(true);
+    }
+    if(Down_pressed == false)
+    {
+      stick.set_value(false);
     }
   }
 

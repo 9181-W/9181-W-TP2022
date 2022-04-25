@@ -7,12 +7,14 @@
 #define PNEUMATIC_FLAP_PORT 'D'
 #define TILTER_PORT 'B'
 #define BACK_CLAW_PORT 'C'
+#define STICK_PORT 'E'
 // #define OPTICAL_SHAFT_ENCODER_RIGHT_TOP 'A'
 // #define OPTICAL_SHAFT_ENCODER_RIGHT_BOTTOM 'B'
 // #define OPTICAL_SHAFT_ENCODER_MIDDLE_TOP 'C'
 // #define OPTICAL_SHAFT_ENCODER_MIDDLE_BOTTOM 'D'
-#define HORIZONTAL_ROTATION_SENSOR 20
-#define VERTICAL_ROTATION_SENSOR 15
+#define HORIZONTAL_ROTATION_SENSOR 10
+#define VERTICAL_ROTATION_SENSOR 1
+#define ARM_ROTATION_SENSOR 2
 
 extern void modified_initialize();
 
@@ -20,9 +22,11 @@ extern DriveTrain drive_train;
 extern okapi::Controller master_controller;
 extern pros::Rotation* shaft_enc_r;
 extern pros::Rotation* shaft_enc_m;
+extern pros::Rotation* arm_shaft_enc;
 extern okapi::Motor intake_mtr;
 extern okapi::Motor arm_mtr;
 extern pros::ADIDigitalOut pneumatic_claw;
 extern pros::ADIDigitalOut pneumatic_flap;
 extern pros::ADIDigitalOut back_claw;
 extern pros::ADIDigitalOut tilter;
+extern pros::ADIDigitalOut stick;

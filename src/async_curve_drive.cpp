@@ -28,8 +28,9 @@ bool async_reverse = false;
 double async_rotate_epsilon = 0.0;
 double async_epsilon = 0.0;
 double async_division_const = 0.0;
-int async_colour = 0;
-double async_lookahead_distance = 0;
+int async_colour = 0.0;
+double async_lookahead_distance = 0.0;
+double async_true_epsilon = 0.0;
 bool async_complete_2 = true;
 pros::Task* drive_task_2 = NULL;
 
@@ -41,7 +42,7 @@ void async_curve_drive_to_point(void* param)
     //if the drive is not complete continue running the drive
     if(!async_complete_2)
     {
-      curve_drive_to_point(async_x_target, async_y_target, async_max_speed, async_min_speed, async_kp, async_kd, async_max_turn_speed, async_turn_kp, async_rotate_kp, async_max_rotate_speed, async_min_rotate_speed, async_turn_first, async_stop_drive, async_reverse, async_colour, async_rotate_epsilon, async_epsilon, async_division_const, async_lookahead_distance);
+      curve_drive_to_point(async_x_target, async_y_target, async_max_speed, async_min_speed, async_kp, async_kd, async_max_turn_speed, async_turn_kp, async_rotate_kp, async_max_rotate_speed, async_min_rotate_speed, async_turn_first, async_stop_drive, async_reverse, async_colour, async_rotate_epsilon, async_epsilon, async_division_const, async_lookahead_distance, async_true_epsilon);
       //sets the drive to a completed state
       async_complete_2 = true;
     }
@@ -70,6 +71,7 @@ void kill_drive_task()
   if(drive_task_2 != NULL)
   {
     drive_task_2->remove();
+    delete drive_task_2;
     drive_task_2 = NULL;
     drive_train.ArcadeDrive(0.0, 0.0);
     async_complete_2 = true;
@@ -77,7 +79,7 @@ void kill_drive_task()
 }
 
 //uses a new function to assign values to the asynchronous variables
-void async_curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, double min_speed, double kp, double kd, double max_turn_speed, double turn_kp, double rotate_kp, double max_rotate_speed, double min_rotate_speed, bool turn_first, bool stop_drive, bool reverse, int colour, double rotate_epsilon, double epsilon, double division_const, double lookahead_distance)
+void async_curve_drive_to_point(QLength x_target, QLength y_target, double max_speed, double min_speed, double kp, double kd, double max_turn_speed, double turn_kp, double rotate_kp, double max_rotate_speed, double min_rotate_speed, bool turn_first, bool stop_drive, bool reverse, int colour, double rotate_epsilon, double epsilon, double division_const, double lookahead_distance, double true_epsilon)
 {
   //assigns values to the asynchronous variables
   async_x_target = x_target;
@@ -99,6 +101,7 @@ void async_curve_drive_to_point(QLength x_target, QLength y_target, double max_s
   async_division_const = division_const;
   async_colour = colour;
   async_lookahead_distance = lookahead_distance;
+  async_true_epsilon = true_epsilon;
 
 
 

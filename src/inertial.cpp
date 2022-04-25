@@ -2,8 +2,8 @@
 using namespace okapi;
 
 //defines which ports the inertial sensors are in
-#define INERTIAL_PORT_1 6
-#define INERTIAL_PORT_2 7
+#define INERTIAL_PORT_1 15
+#define INERTIAL_PORT_2 3
 
 //creates the inertials as empty objects
 pros::Imu* inertial_1 = NULL;
@@ -94,7 +94,8 @@ double inertial_get_value()
   double curr_1 = inertial_value_1 - zero_inertial_1;
   double curr_2 = inertial_value_2 - zero_inertial_2;
   //returns an average of the two inertial values
-  return (((curr_1 + curr_2) / 2) / 1.00305556);
+  return (((curr_1 + curr_2) / 2) / (3611.9 / 3600));
+  // 00305556
 }
 
 // Reset inertial value to a value between -180 and +180.

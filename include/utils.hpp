@@ -3,7 +3,7 @@ using namespace okapi;
 
 
 // extern void intake(double intake_speed);
-extern void async_intake(double async_intake_speed);
+extern void async_intake(double async_intake_speed, bool unjam);
 extern void stop_intake();
 extern void move_arm(double position, double speed);
 // extern void lower_lifter(double speed, bool wait_for_complete);

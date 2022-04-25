@@ -8,8 +8,9 @@
 //creates the shaft encoders as empty objects
 pros::Rotation* shaft_enc_r = NULL;
 pros::Rotation* shaft_enc_m = NULL;
+pros::Rotation* arm_shaft_enc = NULL;
 
-DriveTrain drive_train({-18, -19, -20}, {11, 12, 13});
+DriveTrain drive_train({-18, -19, -20}, {11, 12, 13}, AbstractMotor::gearset::blue);
 // DriveTrain drive_train({10, -18, -19}, {-11, 12, 13});
 // DriveTrain drive_train({11, 12}, {-19, -20});
 //20 15
@@ -22,6 +23,7 @@ pros::ADIDigitalOut pneumatic_claw(PNEUMATIC_CLAW_PORT);
 pros::ADIDigitalOut pneumatic_flap(PNEUMATIC_FLAP_PORT);
 pros::ADIDigitalOut back_claw(BACK_CLAW_PORT);
 pros::ADIDigitalOut tilter(TILTER_PORT);
+pros::ADIDigitalOut stick(STICK_PORT);
 
 //creates a task to display the encoder values
 void encoder_display_task(void* param)
@@ -51,18 +53,21 @@ void modified_initialize()
   // shaft_enc_r = new ADIEncoder(OPTICAL_SHAFT_ENCODER_RIGHT_TOP, OPTICAL_SHAFT_ENCODER_RIGHT_BOTTOM, true);
   // shaft_enc_m = new ADIEncoder(OPTICAL_SHAFT_ENCODER_MIDDLE_TOP, OPTICAL_SHAFT_ENCODER_MIDDLE_BOTTOM, false);
 
-  // shaft_enc_r = new pros::Rotation(VERTICAL_ROTATION_SENSOR);
-  // shaft_enc_m = new pros::Rotation(HORIZONTAL_ROTATION_SENSOR);
-  // shaft_enc_r->reset_position();
-  // shaft_enc_m->reset_position();
+  shaft_enc_r = new pros::Rotation(VERTICAL_ROTATION_SENSOR);
+  shaft_enc_m = new pros::Rotation(HORIZONTAL_ROTATION_SENSOR);
+  arm_shaft_enc = new pros::Rotation(ARM_ROTATION_SENSOR);
+  shaft_enc_r->reverse();
+  shaft_enc_r->reset_position();
+  shaft_enc_m->reset_position();
+  arm_shaft_enc->reset_position();
 
-  // //creates a task to display encoder values and make them continually drawable
-  // pros::Task encoder_display (encoder_display_task, (void*)"PROSV5", TASK_PRIORITY_DEFAULT,
-  //   TASK_STACK_DEPTH_DEFAULT, "Encoder Display Task");
+  //creates a task to display encoder values and make them continually drawable
+  pros::Task encoder_display (encoder_display_task, (void*)"PROSV5", TASK_PRIORITY_DEFAULT,
+    TASK_STACK_DEPTH_DEFAULT, "Encoder Display Task");
 
-  // inertial_initialize();
+  inertial_initialize();
   //
-  // tracker_initialize();
+  tracker_initialize();
 
   // vision_initialize();
 

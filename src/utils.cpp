@@ -8,18 +8,23 @@ using namespace okapi;
 pros::Task* intake_task = NULL;
 double async_complete_4;
 double async_intake_speed = 0.0;
+bool async_unjam;
 
 //Intake_functions
 
 void stop_intake()
 {
-  intake_task->remove();
-  intake_task = NULL;
+  if (intake_task != NULL)
+  {
+    intake_task->remove();
+    delete intake_task;
+    intake_task = NULL;
+  }
   intake_mtr.moveVelocity(0);
   async_complete_4 = true;
 }
 
-void intake(double async_intake_speed)
+void intake(double async_intake_speed, bool unjam)
 {
   int start_time = pros::c::millis();
   while(async_complete_4 == false)
@@ -28,9 +33,13 @@ void intake(double async_intake_speed)
     if((intake_mtr.getActualVelocity() < 15) && ((pros::c::millis() - start_time) > 2000))
     {
       intake_mtr.moveVelocity(-600);
-      pros::delay(750);
+      pros::delay(850);
       intake_mtr.moveVelocity(async_intake_speed);
       start_time = pros::c::millis();
+    }
+    else if (unjam == true)
+    {
+      intake_mtr.moveVelocity(-600);
     }
     else
     {
@@ -47,14 +56,14 @@ void async_intake(void *param)
     //if the drive is not complete continue running the drive
     if(!async_complete_4)
     {
-      intake(async_intake_speed);
+      intake(async_intake_speed, async_unjam);
       async_complete_4 = true;
     }
     pros::delay(33);
   }
 }
 
-void async_intake(double intake_speed)
+void async_intake(double intake_speed, bool unjam)
 {
   async_intake_speed = intake_speed;
 
@@ -100,7 +109,7 @@ void lower_lifter()
 void raise_lifter()
 {
   back_claw.set_value(true);
-  pros::delay(125);
+  pros::delay(100);
   tilter.set_value(false);
 }
 
@@ -247,6 +256,7 @@ void kill_all_tasks()
   if(intake_task != NULL)
   {
     intake_task->remove();
+    delete intake_task;
     intake_task = NULL;
     intake_mtr.moveVelocity(0);
   }

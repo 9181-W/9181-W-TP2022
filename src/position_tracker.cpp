@@ -78,10 +78,11 @@ void position_tracker_task(void* param)
   // const double sL = 4.1875;+
   //The left-right distance from the tracking center to the right tracking wheel
   //const double sR = 6.5;
-  const double sR = 1.4375;
+  const double sR = 0.25;
   //The forward-backward distance from the tracking center to the back tracking wheel
   // const double sS = 3.0;
-  const double sS = 0.625; //2.8125
+  const double sS = 2.1875;
+  // const double sS = 2.05;
   //Creates a constant for wheel diameter
   const double wheel_diam = 2.75;
   //const double wheel_diam = 3.25;
