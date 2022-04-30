@@ -242,7 +242,7 @@ void curve_drive_to_line(QLength x_target, QLength y_target, double max_speed, d
       turn_speed = -max_turn_speed;
     }
 
-    printf("drive_error: %7.3f  heading: %7.3f  angle_to_target: %7.3f  curve_error: %7.3f  turn_speed: %7.3f speed: %7.3f\n",drive_error,inertial_get_value(),new_angle,curve_error,turn_speed,speed);
+    // printf("drive_error: %7.3f  heading: %7.3f  angle_to_target: %7.3f  curve_error: %7.3f  turn_speed: %7.3f speed: %7.3f\n",drive_error,inertial_get_value(),new_angle,curve_error,turn_speed,speed);
 
     //Setting the desired speed in a percent form and waiting 10 milliseconds
     drive_train.AutonomousArcadeDrive(speed, -turn_speed, false);

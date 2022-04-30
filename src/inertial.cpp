@@ -1,4 +1,6 @@
 #include "okapi/api.hpp"
+#include "drive_train.hpp"
+#include "initialize.hpp"
 using namespace okapi;
 
 //defines which ports the inertial sensors are in
@@ -11,7 +13,10 @@ pros::Imu* inertial_2 = NULL;
 
 //sets the initial values of the inertials to zero
 double inertial_value_1 = 0.0;
+double inertial_roll_1 = 0.0;
 double inertial_value_2 = 0.0;
+double inertial_roll_2 = 0.0;
+
 
 //task function to read the inertials
 void inertial_reading(void* param)
@@ -22,21 +27,25 @@ void inertial_reading(void* param)
     if (inertial_1->is_calibrating() == true)
     {
       inertial_value_1 = 0;
+      inertial_roll_1 = 0;
     }
     //draws the inertial values
     else
     {
       inertial_value_1 = inertial_1->get_rotation();
+      inertial_roll_1 = inertial_1->get_roll();
     }
     //waits until the inertial has calibrated until it draws the value
     if (inertial_2->is_calibrating() == true)
     {
       inertial_value_2 = 0;
+      inertial_roll_2 = 0;
     }
     //draws the inertial values
     else
     {
       inertial_value_2 = inertial_2->get_rotation();
+      inertial_roll_2 = inertial_2->get_roll();
     }
     //prints the inertial values to the lcd screen
     // pros::lcd::print(5,"Inertial Value 1 %5.2f",(inertial_value_1));
@@ -98,6 +107,15 @@ double inertial_get_value()
   // 00305556
 }
 
+double inertial_get_roll()
+{
+  //inertial value is equa to the current value minus the predetermined zero location
+  double curr_1 = inertial_roll_1;
+  double curr_2 = inertial_roll_2;
+  //returns an average of the two inertial values
+  return ((curr_1 + curr_2) / 2);
+}
+
 // Reset inertial value to a value between -180 and +180.
 void normalize_inertial()
 {
@@ -117,4 +135,15 @@ void normalize_inertial()
 
   zero_inertial_1 = zero_inertial_1 + inertial_offset;
   zero_inertial_2 = zero_inertial_2 + inertial_offset;
+}
+
+void drive_to_pitch()
+{
+  while(inertial_get_roll() < 20)
+	{
+		// drive_train.AutonomousArcadeDrive(100, 0.0, true);
+    drive_train.AutonomousArcadeDrive(100, 0.0, false);
+    printf("inertial_roll= %f\n", inertial_get_value());
+	}
+  drive_train.AutonomousArcadeDrive(0.0, 0.0, false);
 }

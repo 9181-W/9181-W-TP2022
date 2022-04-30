@@ -17,7 +17,7 @@ const double degrees_per_circ = 360.0;
 const double degrees_per_inch = degrees_per_circ / wheel_circ;
 
 //Turn x degrees at y speed
-void gyro_turn(QAngle angle, double max_speed, double min_speed, double kp, double ki, double kd, double epsilon)
+void gyro_turn(QAngle angle, double max_speed, double min_speed, double kp, double ki, double kd, double epsilon, bool ltd)
 {
 
     //Chassis arcade takes values from -1 to 1 so this line allows a value from -100 to 100
@@ -66,89 +66,181 @@ void gyro_turn(QAngle angle, double max_speed, double min_speed, double kp, doub
     //double last_speed = 0.0;
 
     //Keep turning while the robot hasn't reached its target distance
-    while ((fabs(last_three_turn_derivatives) > turn_epsilon) || (fabs(turn_error) > turn_epsilon*2.0))
+    if(ltd == true)
     {
-        // ******************************************************************************************************************************* //
-        //  This code uses proportional , differential, and integral constants to calculate the best speed to reach the desired distance   //
-        // ******************************************************************************************************************************* //
+      while ((fabs(last_three_turn_derivatives) > turn_epsilon) || (fabs(turn_error) > turn_epsilon*2.0))
+      {
+          // ******************************************************************************************************************************* //
+          //  This code uses proportional , differential, and integral constants to calculate the best speed to reach the desired distance   //
+          // ******************************************************************************************************************************* //
 
-        // This code accounts for the fact that when the robot turns more than 360 degrees in one direction the gyroscope will still read proper values
-        if(((current_pos_in_degrees + 180) < last_current_pos_in_degrees) && (distance_in_degrees > last_current_pos_in_degrees))
-        {
-          distance_in_degrees = distance_in_degrees - 360;
-        }
+          // This code accounts for the fact that when the robot turns more than 360 degrees in one direction the gyroscope will still read proper values
+          if(((current_pos_in_degrees + 180) < last_current_pos_in_degrees) && (distance_in_degrees > last_current_pos_in_degrees))
+          {
+            distance_in_degrees = distance_in_degrees - 360;
+          }
 
-        else if(((current_pos_in_degrees -180)> last_current_pos_in_degrees) && (distance_in_degrees < last_current_pos_in_degrees))
-        {
-          distance_in_degrees = distance_in_degrees + 360;
-        }
+          else if(((current_pos_in_degrees -180)> last_current_pos_in_degrees) && (distance_in_degrees < last_current_pos_in_degrees))
+          {
+            distance_in_degrees = distance_in_degrees + 360;
+          }
 
-        last_current_pos_in_degrees = current_pos_in_degrees;
-
-
-        //Calculate distance left to turn
-        turn_error = distance_in_degrees - current_pos_in_degrees;
-
-        // printf("current: %f  error: %f ", current_pos_in_degrees, turn_error);
-
-        //Calculates the derivative
-        double turn_derivative = turn_last_error - turn_error;
-
-        fourth_last_turn_error = third_last_turn_error;
-
-        third_last_turn_error = second_last_turn_error;
-
-        second_last_turn_error = turn_last_error;
-
-        //Sets a new last error
-        turn_last_error = turn_error;
-
-        double third_last_turn_derivative = fourth_last_turn_error - third_last_turn_error;
-
-        double second_last_turn_derivative = third_last_turn_error - second_last_turn_error;
-
-        double last_turn_derivative = second_last_turn_error - turn_last_error;
-
-        last_three_turn_derivatives = last_turn_derivative + second_last_turn_derivative + third_last_turn_derivative;
+          last_current_pos_in_degrees = current_pos_in_degrees;
 
 
-        //Calculate speed to be turned at using kp,ki,kd
-        double speed = turn_error * turn_kp + turn_derivative * turn_kd;
-        // printf("stop: %f  Speed: %f  (p,i,d): (%f,%f) ",last_three_turn_derivatives,speed,turn_error*turn_kp,turn_derivative*turn_kd);
+          //Calculate distance left to turn
+          turn_error = distance_in_degrees - current_pos_in_degrees;
 
-        //Removes impossible speeds by setting the speed down to a possible one
-        if(speed > max_speed)
-        {
-            speed = max_speed;
-        }
+          // printf("current: %f  error: %f ", current_pos_in_degrees, turn_error);
 
-        if(speed < max_speed * -1)
-        {
-            speed = max_speed * -1;
-        }
+          //Calculates the derivative
+          double turn_derivative = turn_last_error - turn_error;
 
-        if ((speed > 0) && (speed < min_speed))
-        {
-          speed = min_speed;
-        }
-        if ((speed < 0) && (speed > -min_speed))
-        {
-          speed = -min_speed;
-        }
+          fourth_last_turn_error = third_last_turn_error;
 
-        // printf("adj speed: %f\n",speed);
+          third_last_turn_error = second_last_turn_error;
 
-        //Setting the desired speed in a percent form and waiting 10 milliseconds
-        drive_train.AutonomousArcadeDrive(0.0, -speed);
-        // std::shared_ptr<ChassisModel> chassis_model = chassis->getModel();
-        // std::shared_ptr<XDriveModel> chassis_x_model = std::dynamic_pointer_cast<XDriveModel>(chassis_model);
-        // chassis_x_model->xArcade(speed, 0.0, 0.0);
-        // chassis_x_model->rotate(speed);
-        pros::delay(33);
+          second_last_turn_error = turn_last_error;
 
-        //Calculates current position based on start position after small movement
-        current_pos_in_degrees =  inertial_get_value() - start_pos_in_degrees;
+          //Sets a new last error
+          turn_last_error = turn_error;
+
+          double third_last_turn_derivative = fourth_last_turn_error - third_last_turn_error;
+
+          double second_last_turn_derivative = third_last_turn_error - second_last_turn_error;
+
+          double last_turn_derivative = second_last_turn_error - turn_last_error;
+
+          last_three_turn_derivatives = last_turn_derivative + second_last_turn_derivative + third_last_turn_derivative;
+
+
+          //Calculate speed to be turned at using kp,ki,kd
+          double speed = turn_error * turn_kp + turn_derivative * turn_kd;
+          // printf("stop: %f  Speed: %f  (p,i,d): (%f,%f) ",last_three_turn_derivatives,speed,turn_error*turn_kp,turn_derivative*turn_kd);
+
+          //Removes impossible speeds by setting the speed down to a possible one
+          if(speed > max_speed)
+          {
+              speed = max_speed;
+          }
+
+          if(speed < max_speed * -1)
+          {
+              speed = max_speed * -1;
+          }
+
+          if ((speed > 0) && (speed < min_speed))
+          {
+            speed = min_speed;
+          }
+          if ((speed < 0) && (speed > -min_speed))
+          {
+            speed = -min_speed;
+          }
+
+          // printf("adj speed: %f\n",speed);
+
+          //Setting the desired speed in a percent form and waiting 10 milliseconds
+          drive_train.AutonomousArcadeDrive(0.0, -speed);
+          // std::shared_ptr<ChassisModel> chassis_model = chassis->getModel();
+          // std::shared_ptr<XDriveModel> chassis_x_model = std::dynamic_pointer_cast<XDriveModel>(chassis_model);
+          // chassis_x_model->xArcade(speed, 0.0, 0.0);
+          // chassis_x_model->rotate(speed);
+          pros::delay(33);
+
+          //Calculates current position based on start position after small movement
+          current_pos_in_degrees =  inertial_get_value() - start_pos_in_degrees;
+      }
     }
+
+    else if(ltd == false)
+    {
+      while ((fabs(turn_error) > turn_epsilon))
+      {
+          // ******************************************************************************************************************************* //
+          //  This code uses proportional , differential, and integral constants to calculate the best speed to reach the desired distance   //
+          // ******************************************************************************************************************************* //
+
+          // This code accounts for the fact that when the robot turns more than 360 degrees in one direction the gyroscope will still read proper values
+          if(((current_pos_in_degrees + 180) < last_current_pos_in_degrees) && (distance_in_degrees > last_current_pos_in_degrees))
+          {
+            distance_in_degrees = distance_in_degrees - 360;
+          }
+
+          else if(((current_pos_in_degrees -180)> last_current_pos_in_degrees) && (distance_in_degrees < last_current_pos_in_degrees))
+          {
+            distance_in_degrees = distance_in_degrees + 360;
+          }
+
+          last_current_pos_in_degrees = current_pos_in_degrees;
+
+
+          //Calculate distance left to turn
+          turn_error = distance_in_degrees - current_pos_in_degrees;
+
+          // printf("current: %f  error: %f ", current_pos_in_degrees, turn_error);
+
+          //Calculates the derivative
+          double turn_derivative = turn_last_error - turn_error;
+
+          fourth_last_turn_error = third_last_turn_error;
+
+          third_last_turn_error = second_last_turn_error;
+
+          second_last_turn_error = turn_last_error;
+
+          //Sets a new last error
+          turn_last_error = turn_error;
+
+          double third_last_turn_derivative = fourth_last_turn_error - third_last_turn_error;
+
+          double second_last_turn_derivative = third_last_turn_error - second_last_turn_error;
+
+          double last_turn_derivative = second_last_turn_error - turn_last_error;
+
+          last_three_turn_derivatives = last_turn_derivative + second_last_turn_derivative + third_last_turn_derivative;
+
+
+          //Calculate speed to be turned at using kp,ki,kd
+          double speed = turn_error * turn_kp + turn_derivative * turn_kd;
+          // printf("stop: %f  Speed: %f  (p,i,d): (%f,%f) ",last_three_turn_derivatives,speed,turn_error*turn_kp,turn_derivative*turn_kd);
+
+          //Removes impossible speeds by setting the speed down to a possible one
+          if(speed > max_speed)
+          {
+              speed = max_speed;
+          }
+
+          if(speed < max_speed * -1)
+          {
+              speed = max_speed * -1;
+          }
+
+          if ((speed > 0) && (speed < min_speed))
+          {
+            speed = min_speed;
+          }
+          if ((speed < 0) && (speed > -min_speed))
+          {
+            speed = -min_speed;
+          }
+
+          // printf("adj speed: %f\n",speed);
+
+          //Setting the desired speed in a percent form and waiting 10 milliseconds
+          drive_train.AutonomousArcadeDrive(0.0, -speed);
+          // std::shared_ptr<ChassisModel> chassis_model = chassis->getModel();
+          // std::shared_ptr<XDriveModel> chassis_x_model = std::dynamic_pointer_cast<XDriveModel>(chassis_model);
+          // chassis_x_model->xArcade(speed, 0.0, 0.0);
+          // chassis_x_model->rotate(speed);
+          pros::delay(33);
+
+          //Calculates current position based on start position after small movement
+          current_pos_in_degrees =  inertial_get_value() - start_pos_in_degrees;
+      }
+    }
+
+
 
     //Stops the motors
     drive_train.AutonomousArcadeDrive(0.0, 0.0);
@@ -156,10 +248,10 @@ void gyro_turn(QAngle angle, double max_speed, double min_speed, double kp, doub
 
 
 //void gyro_turn_to(std::shared_ptr<ChassisController> chassis, QAngle angle, double max_speed, double min_speed)
-void gyro_turn_to(QAngle angle, double max_speed, double min_speed, double kp, double ki, double kd, double epsilon)
+void gyro_turn_to(QAngle angle, double max_speed, double min_speed, double kp, double ki, double kd, double epsilon, bool ltd)
 {
     double new_turn = angle.convert(degree) - inertial_get_value();
     QAngle new_angle = new_turn * degree;
     // gyro_turn(chassis, new_angle, max_speed, 17.5);
-    gyro_turn(new_angle, max_speed, min_speed, kp, ki, kd, 2);
+    gyro_turn(new_angle, max_speed, min_speed, kp, ki, kd, epsilon, ltd);
 }

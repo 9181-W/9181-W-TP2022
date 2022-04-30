@@ -1,6 +1,20 @@
+#include "main.h"
 #include "okapi/api.hpp"
 #include "drive_train.hpp"
+#include "opcontrol.hpp"
 #include "initialize.hpp"
+#include "normal_PID.hpp"
+#include "curve_drive.hpp"
+#include "utils.hpp"
+#include "vision_drive.hpp"
+#include "vision.hpp"
+#include "turn_PID.hpp"
+#include "async_curve_drive.hpp"
+#include "drive_through_point.hpp"
+#include "async_drive_through_point.hpp"
+#include "path_following.hpp"
+#include "inertial.hpp"
+#include "drive_to_line.hpp"
 
 bool L1_pressed = false; //pneumatic claw (toggle)
 bool A_pressed = false; //brake mode (toggle)
@@ -78,7 +92,6 @@ void arm_controls(double arm_gearset_rpm = 100)
     arm_mtr.moveVelocity(0);
   }
 }
-
 
 bool wasAPressed = false;
 bool wasXPressed = false;
@@ -219,7 +232,7 @@ void button_utilities(void* param)
       tilter.set_value(false);
     }
   }
-  /////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 void button_utilities_task()
