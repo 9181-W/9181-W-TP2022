@@ -62,6 +62,8 @@ point prog_skills_4_array[max_points];
 
 point right_side_rush_mid_goal_array[max_points];
 
+point awp_path_1_array[max_points];
+
 void test_points()
 {
   // follow_path(test_array, 6, 1, 20, false, false);
@@ -146,56 +148,37 @@ void right_side_rush_mid_goal()
   follow_path(right_side_rush_mid_goal_array, 3, 2, 20, true, true);
 }
 
+void awp_path_1()
+{
+  awp_path_1_array[0].x_pos = 0.0;
+  awp_path_1_array[0].y_pos = 0.0;
+  awp_path_1_array[0].speed = 0.0;
+  awp_path_1_array[0].m_t_s = 60.0;
+  awp_path_1_array[0].tr_kp = 0.01;
+  awp_path_1_array[0].action_1 = NOTHING;
+  awp_path_1_array[0].action_2 = NOTHING;
+
+  awp_path_1_array[1].x_pos = -1;
+  awp_path_1_array[1].y_pos = -9;
+  awp_path_1_array[1].speed = 30.0;
+  awp_path_1_array[1].m_t_s = 20.0;
+  awp_path_1_array[1].tr_kp = 0.015;
+  awp_path_1_array[1].action_1 = NOTHING;
+  awp_path_1_array[1].action_2 = NOTHING;
+
+  awp_path_1_array[2].x_pos = -19;
+  awp_path_1_array[2].y_pos = -20;
+  awp_path_1_array[2].speed = 30.0;
+  awp_path_1_array[2].m_t_s = 20.0;
+  awp_path_1_array[2].tr_kp = 0.01;
+  awp_path_1_array[2].action_1 = NOTHING;
+  awp_path_1_array[2].action_2 = NOTHING;
+
+  follow_path(awp_path_1_array, 3, 2, 10, true, true);
+}
+
 void prog_skills_1()
 {
-  // prog_skills_1_array[0].x_pos = 0.0;
-  // prog_skills_1_array[0].y_pos = -6;
-  // prog_skills_1_array[0].speed = 0.0;
-  // prog_skills_1_array[0].m_t_s = 60.0;
-  // prog_skills_1_array[0].tr_kp = 0.01;
-  // prog_skills_1_array[0].action_1 = NOTHING;
-  // prog_skills_1_array[0].action_2 = NOTHING;
-  //
-  // prog_skills_1_array[1].x_pos = 8.0;
-  // prog_skills_1_array[1].y_pos = 6.0;
-  // prog_skills_1_array[1].speed = 40.0;
-  // prog_skills_1_array[1].m_t_s = 60.0;
-  // prog_skills_1_array[1].tr_kp = 0.01;
-  // prog_skills_1_array[1].action_1 = NOTHING;
-  // prog_skills_1_array[1].action_2 = NOTHING;
-  //
-  // prog_skills_1_array[2].x_pos = 26;
-  // prog_skills_1_array[2].y_pos = 6.0;
-  // prog_skills_1_array[2].speed = 40.0;
-  // prog_skills_1_array[2].m_t_s = 60.0;
-  // prog_skills_1_array[2].tr_kp = 0.01;
-  // prog_skills_1_array[2].action_1 = NOTHING;
-  // prog_skills_1_array[2].action_2 = NOTHING;
-  //
-  // prog_skills_1_array[3].x_pos = 30;
-  // prog_skills_1_array[3].y_pos = -30.0;
-  // prog_skills_1_array[3].speed = 35.0;
-  // prog_skills_1_array[3].m_t_s = 60.0;
-  // prog_skills_1_array[3].tr_kp = 0.01;
-  // prog_skills_1_array[3].action_1 = NOTHING;
-  // prog_skills_1_array[3].action_2 = NOTHING;
-  //
-  // prog_skills_1_array[4].x_pos = 38;
-  // prog_skills_1_array[4].y_pos = -72.0;
-  // prog_skills_1_array[4].speed = 45.0;
-  // prog_skills_1_array[4].m_t_s = 60.0;
-  // prog_skills_1_array[4].tr_kp = 0.01;
-  // prog_skills_1_array[4].action_1 = NOTHING;
-  // prog_skills_1_array[4].action_2 = NOTHING;
-  //
-  // prog_skills_1_array[5].x_pos = 38;
-  // prog_skills_1_array[5].y_pos = -85.0;
-  // prog_skills_1_array[5].speed = 45.0;
-  // prog_skills_1_array[5].m_t_s = 60.0;
-  // prog_skills_1_array[5].tr_kp = 0.01;
-  // prog_skills_1_array[5].action_1 = INTAKE;
-  // prog_skills_1_array[5].action_2 = LOWER_LIFTER;
-
   prog_skills_1_array[0].x_pos = 20.0;
   prog_skills_1_array[0].y_pos = 5.5;
   prog_skills_1_array[0].speed = 0.0;
@@ -221,93 +204,11 @@ void prog_skills_1()
   prog_skills_1_array[2].action_2 = NOTHING;
 
   follow_path(prog_skills_1_array, 3, 3, 30, true, false);
-
-  // follow_path(prog_skills_1_array, 3, 1, 30, true, false);
 }
 
 void prog_skills_2()
 {
-  // prog_skills_2_array[0].x_pos = 29;
-  // prog_skills_2_array[0].y_pos = -81;
-  // prog_skills_2_array[0].speed = 0.0;
-  // prog_skills_2_array[0].m_t_s = 100.0;
-  // prog_skills_2_array[0].tr_kp = 0.02;
-  // prog_skills_2_array[0].action_1 = NOTHING;
-  // prog_skills_2_array[0].action_2 = NOTHING;
-  //
-  // prog_skills_2_array[1].x_pos = 43;
-  // prog_skills_2_array[1].y_pos = -73.25;
-  // prog_skills_2_array[1].speed = 50.0;
-  // prog_skills_2_array[1].m_t_s = 100.0;
-  // prog_skills_2_array[1].tr_kp = 0.02;
-  // prog_skills_2_array[1].action_1 = NOTHING;
-  // prog_skills_2_array[1].action_2 = NOTHING;
-  //
-  // prog_skills_2_array[2].x_pos = 58;
-  // prog_skills_2_array[2].y_pos = -67;
-  // prog_skills_2_array[2].speed = 25.0;
-  // prog_skills_2_array[2].m_t_s = 100.0;
-  // prog_skills_2_array[2].tr_kp = 0.015;
-  // prog_skills_2_array[2].action_1 = NOTHING;
-  // prog_skills_2_array[2].action_2 = NOTHING;
-  //
-  // prog_skills_2_array[3].x_pos = 73;
-  // prog_skills_2_array[3].y_pos = -44;//-48
-  // prog_skills_2_array[3].speed = 25.0;
-  // prog_skills_2_array[3].m_t_s = 100.0;
-  // prog_skills_2_array[3].tr_kp = 0.02;
-  // prog_skills_2_array[3].action_1 = NOTHING;
-  // prog_skills_2_array[3].action_2 = NOTHING;
-  //
-  // prog_skills_2_array[4].x_pos = 101;
-  // prog_skills_2_array[4].y_pos = -38;
-  // prog_skills_2_array[4].speed = 20.0;
-  // prog_skills_2_array[4].m_t_s = 80.0;
-  // prog_skills_2_array[4].tr_kp = 0.012;//0.015
-  // prog_skills_2_array[4].action_1 = NOTHING;
-  // prog_skills_2_array[4].action_2 = NOTHING;
-
-  // prog_skills_2_array[0].x_pos = 29;
-  // prog_skills_2_array[0].y_pos = -81;
-  // prog_skills_2_array[0].speed = 0.0;
-  // prog_skills_2_array[0].m_t_s = 100.0;
-  // prog_skills_2_array[0].tr_kp = 0.02;
-  // prog_skills_2_array[0].action_1 = NOTHING;
-  // prog_skills_2_array[0].action_2 = NOTHING;
-  //
-  // prog_skills_2_array[1].x_pos = 40;
-  // prog_skills_2_array[1].y_pos = -71.5;
-  // prog_skills_2_array[1].speed = 50.0;
-  // prog_skills_2_array[1].m_t_s = 100.0;
-  // prog_skills_2_array[1].tr_kp = 0.02;
-  // prog_skills_2_array[1].action_1 = NOTHING;
-  // prog_skills_2_array[1].action_2 = NOTHING;
-  //
-  // prog_skills_2_array[2].x_pos = 58;
-  // prog_skills_2_array[2].y_pos = -67;
-  // prog_skills_2_array[2].speed = 25.0;
-  // prog_skills_2_array[2].m_t_s = 100.0;
-  // prog_skills_2_array[2].tr_kp = 0.015;
-  // prog_skills_2_array[2].action_1 = NOTHING;
-  // prog_skills_2_array[2].action_2 = NOTHING;
-  //
-  // prog_skills_2_array[3].x_pos = 75;
-  // prog_skills_2_array[3].y_pos = -44;//-48
-  // prog_skills_2_array[3].speed = 25.0;
-  // prog_skills_2_array[3].m_t_s = 100.0;
-  // prog_skills_2_array[3].tr_kp = 0.02;
-  // prog_skills_2_array[3].action_1 = NOTHING;
-  // prog_skills_2_array[3].action_2 = NOTHING;
-  //
-  // prog_skills_2_array[4].x_pos = 101;
-  // prog_skills_2_array[4].y_pos = -36;
-  // prog_skills_2_array[4].speed = 20.0;
-  // prog_skills_2_array[4].m_t_s = 80.0;
-  // prog_skills_2_array[4].tr_kp = 0.012;//0.015
-  // prog_skills_2_array[4].action_1 = NOTHING;
-  // prog_skills_2_array[4].action_2 = NOTHING;
-
-  prog_skills_2_array[0].x_pos = 36;
+ prog_skills_2_array[0].x_pos = 36;
  prog_skills_2_array[0].y_pos = -80;
  prog_skills_2_array[0].speed = 0.0;
  prog_skills_2_array[0].m_t_s = 100.0;
@@ -323,14 +224,6 @@ void prog_skills_2()
  prog_skills_2_array[1].action_1 = NOTHING;
  prog_skills_2_array[1].action_2 = NOTHING;
 
- // prog_skills_2_array[2].x_pos = 58;
- // prog_skills_2_array[2].y_pos = -67;
- // prog_skills_2_array[2].speed = 25.0;
- // prog_skills_2_array[2].m_t_s = 100.0;
- // prog_skills_2_array[2].tr_kp = 0.015;
- // prog_skills_2_array[2].action_1 = NOTHING;
- // prog_skills_2_array[2].action_2 = NOTHING;
-
  prog_skills_2_array[2].x_pos = 78;
  prog_skills_2_array[2].y_pos = -46;//-48
  prog_skills_2_array[2].speed = 45.0;
@@ -339,9 +232,8 @@ void prog_skills_2()
  prog_skills_2_array[2].action_1 = NOTHING;
  prog_skills_2_array[2].action_2 = NOTHING;
 
-
  prog_skills_2_array[3].x_pos = 101;
- prog_skills_2_array[3].y_pos = -38;
+ prog_skills_2_array[3].y_pos = -37;
  prog_skills_2_array[3].speed = 45.0;
  prog_skills_2_array[3].m_t_s = 80.0;
  prog_skills_2_array[3].tr_kp = 0.01;//0.015
@@ -370,7 +262,7 @@ void prog_skills_3()
   prog_skills_3_array[1].action_2 = NOTHING;
 
   prog_skills_3_array[2].x_pos = 100;
-  prog_skills_3_array[2].y_pos = -36;
+  prog_skills_3_array[2].y_pos = -35;
   prog_skills_3_array[2].speed = 70.0;
   prog_skills_3_array[2].m_t_s = 60.0;
   prog_skills_3_array[2].tr_kp = 0.008;

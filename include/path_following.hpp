@@ -6,3 +6,4 @@ extern void prog_skills_1();
 extern void prog_skills_2();
 extern void prog_skills_3();
 extern void prog_skills_4();
+extern void awp_path_1();
